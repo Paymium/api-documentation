@@ -1,0 +1,1350 @@
+swagger: "2.0"
+host: "paymium.com"
+basePath: "/api/v1"
+schemes: 
+  - https
+consumes:
+  - application/json
+produces: 
+  - application/json; charset=utf-8
+definitions:
+  TradeOrder:
+    type: object
+    properties:
+      timestamp:
+        type: integer
+        description: Number of seconds since Unix Epoch
+        example: 1389087724
+      amount:
+        type: string
+        description: amount at price
+        example: "0.89744"
+      price:
+        type: string
+        example: "664"
+      currency: 
+        type: string
+        description: currency
+        example: "EUR"
+  Order:
+    type: object
+    properties:
+      uuid:
+        type: string
+        description: unique id
+        example: "968f4580-e26c-4ad8-8bcd-874d23d55296"
+      type:
+        type: string
+        description: order type
+        example: "Transfer"
+      currency:
+        type: string
+        description: currency
+        example: "BTC"
+      currency_amount:
+        type: string
+        description: ""
+      created_at:
+        type: string
+        format: date-time
+        description: date created
+        example: "2013-10-24T10:34:37.000Z"
+      updated_at:
+        type: string
+        format: date-time
+        description: date created
+        example: "2013-10-24T10:34:37.000Z"
+      amount:
+        type: string
+        description: currency amount
+        example: "1.0"
+      state:
+        type: string
+        description: order state
+        example: "executed"
+      currency_fee:
+        type: string
+        description: currency fee collected
+        example: 0.0
+      btc_fee:
+        type: string
+        description: btc fee collected
+        example: 0.0
+      comment:
+        type: string
+        description: optional comment
+      traded_btc:
+        type: string
+      traded_currency:
+        type: string
+      direction:
+        type: string
+        example: "buy"
+      price:
+        type: string
+      account_operations:
+        type: array
+        items:
+          $ref: '#/definitions/AccountOperation'
+          
+  AccountOperation:
+    type: object
+    properties:
+      uuid:
+        type: string
+        description: unique id
+        example: "968f4580-e26c-4ad8-8bcd-874d23d55296"
+      amount:
+        type: string
+        description: currency amount
+        example: "1.0"
+      currency:
+        type: string
+        description: currency
+        example: "BTC"
+      created_at:
+        type: string
+        format: date-time
+        description: date created
+        example: "2013-10-24T10:34:37.000Z"
+      created_at_int:
+        type: integer
+        description: Number of seconds since Unix Epoch of the trade
+        example: 1389094259
+      name:
+        type: string
+        description: operation name
+        example: "account_operation"
+      address:
+        type: string
+        description: bitcoin address if any
+        example: 1FPDBXNqSkZMsw1kSkkajcj8berxDQkUoc
+      tx_hash:
+        type: string
+        description: bitcoin transaction hash if any
+      is_trading_account:
+        type: boolean
+        description: whether the trading account is targeted
+  Address:
+    type: object
+    properties:
+      address:
+        type: string
+      valid_until:
+        type: integer
+        description: Expiration timestamp (Number of seconds since Unix Epoch)
+      currency:
+        type: string
+        enum: [BTC, EUR]
+  Payment:
+    type: object
+    properties:
+      uuid:
+        type: string
+        description: Payment identifier
+      currency:
+        type: string
+      payment_split:
+        type: number
+        description: Percentage of the payment the merchant will get in currency
+      state:
+        type: string
+        enum: [pending_payment, processing, paid, error, btc_forwarded, expired]
+      callback_url:
+        type: string
+        description: merchant notification url
+      redirect_url:
+        type: string
+        description: Redirection url to which the customer is redirected on success
+      merchant_name:
+        type: string
+      expires_at:
+        type: integer
+        description: expiration timestamp (Number of seconds since Unix Epoch)
+      merchant_reference:
+        type: string
+      amount:
+        type: string
+      btc_amount:
+        type: string
+        description: BTC amount to pay
+      payment_address:
+        type: string
+      created_at:
+        type: integer
+        description: creation timestamp
+      updated_at:
+        type: integer
+        description: Last update timestamp
+      account_operations: 
+        $ref: '#/definitions/AccountOperation'
+paths:
+  /countries:
+    get:
+      summary: Get countries
+      description: Get list of countries
+      tags:
+        - Public data
+      security: []
+      responses:
+        200:
+          description: An array of countries
+          schema: 
+            type: array
+            items:
+              type: object
+              properties: 
+                id:
+                  type: integer
+                  description: country id
+                accepted: 
+                  type: boolean
+                  description: we currently serve the residents of countries when the flag is set to true
+                card_partner_accepted:
+                  type: boolean
+                iso_alpha2:
+                  type: string
+                  description: ""
+                  example: "FR"
+                iso_alpha3: 
+                  type: string
+                  description: ""
+                  example: "FRA"
+                iso_numeric: 
+                  type: integer
+                  description: ""
+                  example: 250
+                name_en: 
+                  type: string
+                  description: english name,
+                  example: "France"
+                name_fr: 
+                  type: string
+                  description: french name
+                  example: "France"
+                name_es: 
+                  type: string
+                  description: spanish name
+                  example: "Francia"
+                name_de:
+                  type: string
+                  description: deutch name
+                  example: "Frankreich"
+                name_it:
+                  type: string
+                  description: italian name
+                  example: "Francia"
+                telephone_code:
+                  type: integer
+                  description: ""
+                  example: 33
+  /data/{currency}/ticker:
+    get:
+      summary: Get latest ticker data
+      description: Read latest ticker data
+      tags:
+        - Public data
+      security: []
+      parameters:
+        - in: path
+          name: currency
+          required: true
+          type: string
+          enum: [eur, btc]
+      responses:
+        200:
+          description: ""
+          schema: 
+            type: object
+            properties:
+              high:
+                type: string
+                description: 24h high price
+              low:
+                type: string
+                description: 24h low price
+              volume:
+                type: string
+                description: 24h volume
+              bid: 
+                type: string
+                description: bid price
+              ask:
+                type: string
+                description: ask price
+              midpoint:
+                type: string
+                description: midpoint price
+              at: 
+                type: integer
+                description: timestamp
+              price: 
+                type: string
+                description: price of latest trade
+              variation:
+                type: string
+                description: 24h variation (percentage)
+              currency:
+                type: string
+                description: currency
+  /data/{currency}/trades:
+    get:
+      summary: List latest trades
+      description: Read the latest executed trades
+      tags:
+        - Public data
+      security: []
+      parameters:
+        - in: path
+          name: currency
+          required: true
+          type: string
+          enum: [eur, btc]
+        - in: query
+          name: since
+          type: integer
+          description: Number of seconds since the Unix Epoch of the oldest trade to fetch.
+      responses:
+        200:
+          description: An array of trades
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                uuid: 
+                  type: string
+                  description: unique ID of trade
+                  example: "59f9c458-cb22-48d6-9103-0b6e54130e29"
+                traded_btc:
+                  type: string
+                  description: amount of BTC traded
+                  example: "0.153"
+                traded_currency:
+                  type: string
+                  description: amount of currency traded
+                  example: "102.51"
+                created_at:
+                  type: string
+                  format: date-time
+                  description: date created
+                  example: "2014-01-07T11:30:59Z"
+                currency: 
+                  type: string
+                  description: currency
+                  example: "EUR"
+                price:
+                  type: string
+                  description: price per BTC
+                  example: "670.0"
+                created_at_int:
+                  type: integer
+                  description: Number of seconds since Unix Epoch of the trade
+                  example: 1389094259
+  /data/{currency}/depth:
+    get:
+      summary: Get market depth
+      description:  Read the market dept, bids and asks are grouped by price.
+      tags:
+        - Public data
+      security: []
+      parameters:
+        - in: path
+          name: currency
+          required: true
+          type: string
+          enum: [eur, btc]
+      responses:
+        200:
+          description: ""
+          schema:
+            type: object
+            properties:
+              bids: 
+                type: array
+                items:
+                  $ref: '#/definitions/TradeOrder'
+              asks:
+                type: array
+                items:
+                  $ref: '#/definitions/TradeOrder'
+  /user:
+    get:
+      summary: Get user info
+      description: Read the latest user info.
+      tags:
+        - User
+      security:
+        - ApiKey: []
+          ApiSignature: []
+          ApiNonce: []
+        - OAuth2: [basic]
+      responses:
+        200:
+          description: ""
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: account number/name
+                example: BC-U123456
+              email:
+                type: string
+                description: email
+              locale:
+                type: string
+                description: locale code
+                example: en
+              channel_id:
+                type: string
+                description: channel
+              meta_state:
+                type: string
+                description: kyc user status
+              balance_btc:
+                type: string
+                description: available BTC balance
+                example: "25.78866278"
+              locked_btc:
+                type: string
+                description: BTC balance locked in trading
+                example: "1.0"
+              balance_eur:
+                type: string
+                description: available EUR balance
+                example: "1893.96"
+              locked_eur:
+                 type: string
+                 description: EUR balance locked in trading
+                 example: "300.00743886"
+  /user/orders:
+    get:
+      summary: List orders
+      description: Read user orders
+      tags:
+        - Order
+      security:
+        - ApiKey: []
+          ApiSignature: []
+          ApiNonce: []
+        - OAuth2: [activity]
+      parameters:
+        - in: query
+          name: offset
+          type: integer
+          description: pagination offset
+        - in: query
+          name: limit
+          type: integer
+          description: pagination limit
+        - in: query
+          name: types
+          type: array
+          description: filter by types 
+          items:
+            type: string
+            enum: [LimitOrder, MarketOrder, BitcoinDeposit, WireDeposit, Payment, EmailTransfer, EmailDeposit]
+        - in: query
+          name: active
+          type: boolean
+          description: only show active orders
+      responses:
+        200:
+          description: ""
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Order'
+    post:
+      summary: Create order
+      tags:
+        - Order
+      security:
+        - ApiKey: []
+          ApiSignature: []
+          ApiNonce: []
+        - OAuth2: [trade]
+      parameters:
+        - in: query
+          name: type
+          required: true
+          type: string
+          enum: [LimitOrder, MarketOrder]
+        - in: query
+          name: currency
+          required: true
+          type: string
+          description: must be EUR
+          x-example: EUR
+        - in: query
+          name: direction
+          type: string
+          enum: [buy, sell]
+          required: true
+        - in: query
+          name: price
+          type: number
+          description: price per BTC, must be omitted for market orders
+          x-example: 1
+        - in: query
+          name: amount
+          type: number
+          description: BTC amount to trade. Either one of amount or currency_amount must be specified. When the amount is specified, the engine will buy or sell this amount of Bitcoins. When the currency_amount is specified, the engine will buy as much Bitcoins as possible for currency_amount or sell as much Bitcoins as necessary to obtain currency_amount.
+          x-example: 0.001
+        - in: query
+          name: currency_amount
+          type: number
+          description: Currency amount to trade. Either one of amount or currency_amount must be specified. When the amount is specified, the engine will buy or sell this amount of Bitcoins. When the currency_amount is specified, the engine will buy as much Bitcoins as possible for currency_amount or sell as much Bitcoins as necessary to obtain currency_amount.
+      responses:
+        201:
+          description: ""
+          schema:
+            $ref: '#/definitions/Order'
+  /user/orders/{uuid}:
+    get:
+      summary: Get order
+      description: Read details from a specific order.
+      tags:
+        - Order
+      security:
+        - ApiKey: []
+          ApiSignature: []
+          ApiNonce: []
+        - OAuth2: [activity]
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          type: string
+          x-example: d64e6450-bf17-44a7-9bc1-bb830610293a
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: '#/definitions/Order'
+        404:
+          description: order not found
+    delete:
+      summary: Cancel order
+      description: Only active trade orders and email transfers may be canceled
+      tags:
+        - Order
+      security:
+        - ApiKey: []
+          ApiSignature: []
+          ApiNonce: []
+        - OAuth2: [trade]
+      produces:
+        - text/plain; charset=utf-8
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          type: string
+          x-example: d64e6450-bf17-44a7-9bc1-bb830610293a
+      responses:
+        200:
+          description: OK
+  /user/orders/{uuid}/cancel:
+    delete:
+      summary: Cancel order
+      description: Only active trade orders and email transfers may be canceled
+      deprecated: true
+      tags:
+        - Order
+      security:
+        - ApiKey: []
+          ApiSignature: []
+          ApiNonce: []
+        - OAuth2: [trade]
+      produces:
+        - text/plain; charset=utf-8
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          type: string
+          x-example: d64e6450-bf17-44a7-9bc1-bb830610293a
+      responses:
+        200:
+          description: OK
+  /user/withdrawals:
+    post:
+      summary: Create withdrawal
+      description: Request BTC or fiat withdrawals. A confirmation is sent by email to the user before it can be executed.
+      tags:
+        - Transfer
+      security:
+        - ApiKey: []
+          ApiSignature: []
+          ApiNonce: []
+        - OAuth2: [withdraw]
+      parameters:
+        - in: query
+          name: currency
+          required: true
+          type: string
+          enum: [BTC,EUR]
+          x-example: EUR
+        - in: query
+          name: amount
+          required: true
+          type: number
+          description: amount to transfer
+          x-example: 0.001
+        - in: query
+          name: address
+          type: string
+          description: BTC address if withdrawing BTC
+      responses:
+        201:
+          description: ""
+          schema:
+            $ref: '#/definitions/Order'
+  /user/email_transfers:
+    post:
+      summary: Create email transfer
+      description: Initiate a money transfer to an e-mail address. The transfer is immediately executed if the user have a valid account. Otherwise, an e-mail is sent with a registration invitation. This transfer expire after 1 month if it is not collected. In this case, the order is cancelled and the sender re-credited.
+      tags:
+        - Transfer
+      security:
+        - ApiKey: []
+          ApiSignature: []
+          ApiNonce: []
+        - OAuth2: [withdraw]
+      parameters:
+        - in: query
+          name: amount
+          type: number
+          description: amount to transfer
+        - in: query
+          name: currency
+          type: string
+          enum: [BTC, EUR]
+        - in: query
+          name: email
+          type: string
+          description: an e-mail address
+        - in: query
+          name: comment
+          type: string
+          description: a small note explaining the transfer
+      responses:
+        201:
+          description: ""
+          schema:
+            $ref: '#/definitions/Order'
+  /user/payment_requests:
+    post:
+      summary: Create payment request
+      description: This functionality allows one to create a payment request that is sent by e-mail to the designated recipient, when the link contained in the e-mail is clicked, the recipient is presented with a Bitcoin address to which he is instructed to direct his payment. Once the Bitcoin payment is confirmed, the payee is credited in the originally requested currency.
+      tags:
+        - Transfer
+      security:
+        - ApiKey: []
+          ApiSignature: []
+          ApiNonce: []
+        - OAuth2: [payment_request]
+      parameters:
+        - in: query
+          name: currency
+          type: string
+          enum: [BTC, EUR]
+        - in: query
+          name: amount
+          type: number
+          description: amount to transfer
+        - in: query
+          name: email
+          type: string
+          description: an e-mail address
+        - in: query
+          name: payment_split
+          type: number
+          description: Percentage of the payment the merchant will get in currency expressed as a two-decimal places float between 0 and 1 (required)
+        - in: query
+          name: comment
+          type: string
+          description: a small note explaining the transfer
+      responses:
+        201:
+          description: ""
+  /user/addresses:
+    post:
+      summary: Create deposit address
+      description: Create a new Bitcoin deposit address unless another one is already active.
+      tags:
+        - User
+      security:
+        - ApiKey: []
+          ApiSignature: []
+          ApiNonce: []
+        - OAuth2: [deposit]
+      responses:
+        201:
+          description: ""
+          schema:
+            $ref: '#/definitions/Address'
+        422:
+          description: Too many active addresses
+    get:
+      summary: List deposit addresses
+      description: Retrieve your Bitcoin deposit addresses along with their expiration timestamp.
+      tags:
+        - User
+      security:
+        - ApiKey: []
+          ApiSignature: []
+          ApiNonce: []
+        - OAuth2: [deposit]
+      responses:
+        200:
+          description: ""
+          schema:
+            type: array
+            items: 
+              $ref: '#/definitions/Address'
+
+    
+  /user/addresses/{address}:
+    get:
+      summary: Get deposit address
+      description: Retrieve details for a single address
+      tags:
+        - User
+      security:
+        - ApiKey: []
+          ApiSignature: []
+          ApiNonce: []
+        - OAuth2: [deposit]
+      parameters:
+        - in: path
+          name: address
+          type: string
+          required: true
+          x-example: 1FPDBXNqSkZMsw1kSkkajcj8berxDQkUoc
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: '#/definitions/Address'
+        404:
+          description: Address not found
+          
+  /user/price_alerts:
+    get:
+      summary: List price alerts
+      description: Retrieve currently active price alerts.
+      tags:
+        - Price Alert
+      security:
+        - ApiKey: []
+          ApiSignature: []
+          ApiNonce: []
+        - OAuth2: [activity]
+      responses:
+        200:
+          description: ""
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 42
+              token:
+                type: string
+                example: "0ff2f39d-cd9f-4710-9eb5-3f8385f5e059"
+              notify_above:
+                type: number
+                example: 220.5
+              notify_below:
+                type: number
+                example: 180.0
+              last_sent_at:
+                type: integer
+                example: 1445610041
+    post:
+      summary: Create price alert
+      tags:
+        - Price Alert
+      security:
+        - ApiKey: []
+          ApiSignature: []
+          ApiNonce: []
+        - OAuth2: [activity]
+      parameters:
+        - in: query
+          name: token
+          type: string
+        - in: query
+          name: notify_below
+          type: number
+        - in: query
+          name: notify_above
+          type: number
+      responses:
+        201:
+          description: ""
+  /user/price_alerts/{id}:
+    delete:
+      summary: Delete price alert
+      tags:
+        - Price Alert
+      security:
+        - ApiKey: []
+          ApiSignature: []
+          ApiNonce: []
+        - OAuth2: [activity]
+      parameters:
+        - in: path
+          name: id
+          type: integer
+          required: true
+          x-example: 1
+      responses:
+        200:
+          description: ""
+  /merchant/create_payment:
+    post:
+      summary: Create merchant payment
+      description: ""
+      tags:
+        - Merchant
+      security:
+        - ApiKey: []
+          ApiSignature: []
+          ApiNonce: []
+        - OAuth2: [merchant]
+      parameters:
+        - in: query
+          name: amount
+          required: true
+          type: number
+          description: amount requested for the payment
+          x-example: 0.001
+        - in: query
+          name: payment_split
+          type: number
+          description: Percentage of the payment the merchant will get in currency expressed as a two-decimal places float between 0 and 1
+          required: true
+          x-example: 0.5
+        - in: query
+          name: currency
+          required: true
+          type: string
+          enum: [BTC,EUR]
+        - in: query
+          name: callback_url
+          type: string
+          description: Merchant callback URL, it is called when the state of the payment changes
+          x-example: "http://myonlineshop/payments/order-987978/callback"
+        - in: query
+          name: redirect_url
+          type: string
+          description: URL to which the customer should be redirected at upon payment
+          x-example: http://myonlineshop/payments/order-987978/success
+        - in: query
+          name: merchant_reference
+          type: string
+          description: Arbitrary merchant data associated to the payment
+          x-example: order-987978
+      responses:
+        201:
+          description: ""
+          schema: 
+            $ref: "#/definitions/Payment"
+  /merchant/get_payment/{uuid}:
+    get:
+      summary: Get merchant payment
+      tags:
+        - Merchant
+      security:
+        - ApiKey: []
+          ApiSignature: []
+          ApiNonce: []
+        - OAuth2: [merchant]
+      parameters:
+        - in: path
+          name: uuid
+          required: true
+          type: string
+          description: payment identifier
+          x-example: 458f4580-e26c-4ad8-8bcd-874d23d55296
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: "#/definitions/Payment"         
+          
+        
+        
+securityDefinitions:
+  ApiKey:
+    type: apiKey
+    in: header
+    name: Api-Key
+    description: Api-key is the token that is displayed when listing your currently active tokens must be used with Api-Signature and Api-Nonce.
+  ApiSignature:
+    type: apiKey
+    in: header
+    name: Api-Signature
+    description: Api-Signature is the hexdigest of the HMAC-SHA256 hash of the nonce concatenated with the full URL and body of the HTTP request, encoded using your API secret key. Must be used with Api-Key and Api-Nonce
+  ApiNonce:
+    type: apiKey
+    in: header
+    name: Api-Nonce
+    description: The nonce is a positive integer number that must increase with every request you make. Must be used with Api-key and Api-Signature
+  OAuth2:
+    type: oauth2
+    flow: accessCode
+    authorizationUrl: https://paymium.com/api/oauth/authorize
+    tokenUrl: https://paymium.com/api/oauth/token
+    scopes:
+      basic: Read account number, language, and balances (default) 
+      activity: Read trade orders, deposits, withdrawals, and other operations
+      trade: Create and cancel trade orders
+      withdraw: Request EUR and BTC withdrawals (requires email confirmation from users upon withdrawing)
+      payment_request: Used to requesting money by e-mail
+      deposit: List bitcoin deposit addresses and create a new one if needed
+      merchant: Create and manage an account's invoices
+
+security:
+  - ApiKey: []
+    ApiSignature: []
+    ApiNonce: []
+  - OAuth2: [basic]
+info:
+  x-logo:
+    url: https://www.paymium.com/1563550399922/images/logo@2x.png
+    href: https://www.paymium.com/page/developers
+  version: "1.1.0"
+  title: "Paymium API"
+  termsOfService: "https://www.paymium.com/page/tos"
+  contact:
+      email: "support@paymium.com"
+  description: > 
+    The Paymium API allows developers to extend the capabilities of the Paymium platform, from reading the latest ticker to automating trades with bots.
+
+
+    It is possible to, among other things:
+
+    * Access public data (ticker, asks, bids, trades, etc...)
+
+    * Authenticate users with their permission using OAuth2 *
+
+    * Access authenticated user balances, trades, and other data *
+
+    * Automate trading *
+
+
+    _* Authenticating users is only available to developers that have a fully verified and approved Paymium account. On the other hand, public data is available to everyone_.
+
+    # API Changes
+    
+    The official changelog is currently on [GitHub](https://github.com/jeromedcpaymium/api-documentation/blob/master/API-CHANGES.md).
+    
+    You can be notified of the latest changes by watching our official [documentation repository](https://github.com/jeromedcpaymium/api-documentation).
+
+    
+    # General information
+
+    ## Formats and required HTTP request headers
+
+    The API will only answer with JSON or empty responses. It expects parameters to be passed in JSON with the correct `Content-Type: application/json` being set.
+
+    ## Localization
+
+    The relevant results and error messages will be localized to the language associated to the user, currently English and French are supported.
+
+    ## Datetime formats
+
+    Datetime values will be returned as regular JSON format and Unix timestamps, the timestamps are suffixed with `_int`.
+
+    ## Error handling
+
+    Whenever an error is encountered, the answer to a JSON API call will have:
+
+    * An HTTP 422 status (Unprocessable entity) or HTTP 400 (Bad request)
+
+    * A JSON array of localized error messages in the `errors` attribute of the response body
+
+    ### Example
+
+    ```json
+      {
+        "errors": [
+        "Operations account operations amount is greater than your available balance (1781.96 EUR)"
+        "Amount can't be greater than your limit (1781.96 EUR)"
+        ]
+      } 
+    ```
+    
+    ## Successful calls
+
+    If the API call was successful, the platform will answer with:
+
+    * An HTTP 200 status (OK) or HTTP 201 (Created),
+    
+    * A JSON representation of the entity being created or updated if relevant
+
+    ## Rate-limiting
+
+    API calls are rate-limited by IP to 86400 calls per day (one per second on average). Information about the status of the limit can be found in the `X-RateLimit-Limit` and `X-RateLimit-Remaining` HTTP headers.
+
+
+    **Example response with rate-limit headers**
+
+        HTTP/1.1 200  
+        Content-Type: application/json; charset=utf-8
+        X-Ratelimit-Limit: 5000
+        X-Ratelimit-Remaining: 4982
+        Date: Wed, 30 Jan 2013 12:08:58 GMT
+
+
+tags:
+  - name: Public data
+    description: Public data (ticker, asks, bids, trades) can be accessed without authentication.
+  - name: User
+  - name: Order
+  - name: Transfer
+  - name: Price Alert
+  - name: Merchant
+    description: >
+      The Merchant API enables merchants to securely sell goods and services and get paid in Bitcoin. The API makes it possible for the merchant to completely eliminate the risk of market fluctuations when requesting to receive fiat currency in their account. It is also possible to keep a part of the payment in Bitcoin without having it converted at a guaranteed rate.
+
+      The API allows developers to integrate Bitcoin payments very tightly into their platforms, pre-packaged plugins are also available for a growing list of popular e-commerce frameworks.
+
+      For merchants that have very simple needs payment buttons are also available, these buttons remove the integration completely by allowing merchants to simply include a code snippet on a static HTML page, or on a blog to receive fixed-amount payments.
+
+      # Payment creation
+      
+      ## Authentication
+
+      _The 'merchant token' authentication mechanism has been removed please use an [API token](#token-authentication) or an [OAuth2 token](#oauth2-authentication) instead with the 'merchant' scope._
+
+      ### Description
+
+      A payment is created by a merchant platform when the customer chooses Bitcoin as his desired checkout option.
+
+      The merchant platform can then :
+  
+      * display the payment Bitcoin address on his own web interface,
+  
+      * include the Paymium web interface url in an iframe in order to display a payment pop-up as an overlay,
+  
+      * redirect the buyer to the payement's URL (see below), in this case the payment is displayed on a separate screen
+
+      To display the payment request to the user, the `https://paymium.com/invoice/{UUID}` can be used, this is used by the e-commerce framework plugins.
+  
+      ![invoice](https://raw.githubusercontent.com/Paymium/api-documentation/master/display-invoice.png "Invoice")
+      
+  
+      Once the payment request is displayed, the customer has 15 minutes to send the appropriate amount.
+  
+      Paymium notifies the merchant of the completion of his payment via the associated callback (for which an URL may be provided when creating the payment request), once one Bitcoin confirmation for the payment is received the funds are credited to the merchant's account, a callback notification is then made.
+      
+  - name: WebSocket
+    description: >
+      # Overview
+      
+      A [socket.io](http://socket.io) endpoint is available to receive public data. This allows you to receive new data without having to poll the server.
+
+      The socket.io socket will emit a `stream` event when new data is available. The received JSON data contains one or more of the properties listed below, depending on what was updated.
+
+      ## Socket.io configuration
+
+      Socket.io must connect to `https://paymium.com/<public or user>` and the `path` option must be set to `/ws/socket.io`.
+
+      ## Message descriptions
+
+      The Websocket messages are currently documented separately: [documentation](https://github.com/Paymium/api-documentation/blob/master/WEBSOCKETS.md).
+
+      ### Node.js example
+
+      Assuming you have node.js installed, you can install the socket.io client library by running `npm install socket.io-client`.
+
+      The code below shows how to connect to the Paymium socket, and outputs any received data to the console.
+
+      The example is available in the `examples/public_socket.js` directory of this repository.
+
+      ```javascript
+        var io = require('socket.io-client');
+
+        var socket = io.connect('paymium.com/public', {
+        path: '/ws/socket.io'
+        });
+
+        console.log('CONNECTING');
+
+        socket.on('connect', function() {
+        console.log('CONNECTED');
+        console.log('WAITING FOR DATA...');
+        });
+
+        socket.on('disconnect', function() {
+        console.log('DISCONNECTED');
+        });
+
+        socket.on('stream', function(data) {
+          console.log('GOT DATA:');
+          console.log(data);
+        });
+      ```
+      
+      Websockets are implemented using **socket.io v1.3**.
+      
+      # Public socket
+      
+      ## Subscribing
+      
+      You must connect your socket.io client to `paymium.com/public`, setting the path
+      option to `/ws/socket.io`. When new data is available, a `stream` event is
+      triggered.
+      
+      ## NodeJS example
+      
+      
+      ```javascript
+        var io = require('socket.io-client');
+      
+        var socket = io.connect('https://www.paymium.com/public', {
+        path: '/ws/socket.io'
+        });
+      
+        console.log('CONNECTING');
+        
+        socket.on('connect', function() {
+        console.log('CONNECTED');
+        console.log('WAITING FOR DATA...');
+        });
+        
+        socket.on('disconnect', function() {
+        console.log('DISCONNECTED');
+        });
+        
+        socket.on('stream', function(publicData) {
+        console.log('GOT DATA:');
+        console.log(publicData);
+        });
+      ```
+      
+      ## Public data
+      
+      The `stream` event will emit an object when new data is available. The object
+      will have properties **only for the data that changed**.
+      
+      ### publicData.ticker
+      
+      If the ticker changed, `publicData.ticker` will contains the new ticker
+      information.
+      
+      Example:
+      
+      ```javascript
+        {
+        ticker: {
+          high: "275",
+          low: "275",
+          volume: "0.10909089",
+          bid: "205",
+          ask: "275",
+          midpoint: "240",
+          vwap: "275",
+          at: 1446464202,
+          price: "275",
+          open: "270",
+          variation: "1.8519",
+          currency: 'EUR',
+          trade_id: '460aff60-8fff-4fb0-8be5-2f8dc67758c2'
+          }
+        }
+      ```
+      
+      ### publicData.trades
+      
+      If new trades are executed, `publicData.trades` will be an array containing the
+      new trades.
+      
+      Example:
+      
+      ```javascript
+        {
+            trades: [
+                {
+                price: "275",
+                traded_btc: "0.03636363",
+                timestamp: 1446464202000,
+                currency: 'EUR'
+                }
+            ]
+        }
+      ```
+      
+      ### publicData.bids
+      
+      If buy orders have changed (created, changed, or deleted), `publicData.bids`
+      will be an array containing the modified orders. Orders are aggregated by price.
+      If `amount` is `0`, there are no more orders at this price.
+      
+      Example:
+      
+      ```javascript
+        {
+            bids: [
+                {
+                    timestamp: 1424208720,
+                    amount: "17.43992373",
+                    price: "265",
+                    currency: 'EUR'
+                }
+            ]
+        }
+      ```
+      
+      ### publicData.asks
+      
+      If sell orders have changed (created, changed, or deleted), `publicData.asks`
+      will be an array containing the modified orders. Orders are aggregated by price.
+      If `amount` is `0`, there are no more orders at this price.
+      
+      Example:
+      
+      ```javascript
+        {
+            asks: [
+                {
+                    timestamp: 1424208720,
+                    amount: 17.43992373,
+                    price: 275,
+                    currency: 'EUR'
+                }
+            ]
+        }
+      ```
+      
+      # User socket
+      
+      ## Subscribing
+      
+      You must connect your socket.io client to `https://www.paymium.com/user`, setting the path
+      option to `/ws/socket.io`.
+      
+      You must emit a `channel` event with the user channel id. This channel id is
+      available in the user's json (`/api/v1/user`).
+      
+      When new data is available, a `stream` event is triggered.
+      
+      ## NodeJS example
+      
+      ```javascript
+        var io = require('socket.io-client');
+      
+        var socket = io.connect('https://www.paymium.com/user', {
+            path: '/ws/socket.io'
+        });
+      
+        console.log('CONNECTING');
+      
+        socket.on('connect', function() {
+            console.log('CONNECTED');
+            console.log('WAITING FOR DATA...');
+        });
+      
+        // Replace USER_CHANNEL_ID with the channel id of the user
+        socket.emit('channel', 'USER_CHANNEL_ID');
+      
+        socket.on('disconnect', function() {
+            console.log('DISCONNECTED');
+        });
+      
+        socket.on('stream', function(userData) {
+            console.log('GOT DATA:');
+            console.log(userData);
+        });
+      ```
+      
+      ## User data
+      
+      The `stream` event will emit an object when new data is available. The object
+      will have properties **only for the data that changed**.
+      
+      ### userData.balance_eur
+      
+      If the available EUR balance changed, `userData.balance_eur` will contain the
+      new balance.
+      
+      ```javascript
+        {
+            balance_eur: "410.04"
+        }
+      ```
+      
+      ### userData.locked_eur
+      
+      If the locked EUR balance changed, `userData.locked_eur` will contain the
+      new balance.
+      
+      ```javascript
+        {
+            locked_eur: "20.24"
+        }
+      ```
+      
+      ### userData.balance_btc
+      
+      If the available BTC balance changed, `userData.balance_btc` will contain the
+      new balance.
+      
+      ```javascript
+        {
+            balance_btc: "53.29811458"
+        }
+      ```
+      
+      ### userData.locked_btc
+      
+      If the locked BTC balance changed, `userData.locked_btc` will contain the
+      new balance.
+      
+      ```javascript
+        {
+            locked_btc: "0"
+        }
+      ```
+      
+      ### userData.orders
+      
+      If user orders have changed (created, filled, cancelled, etc...),
+      `userData.orders` will be an array containing the modified orders. You can check
+      the state of the orders to handle them properly.
+      
+      Example:
+      
+      ```javascript
+        {
+            orders: [
+                {
+                    uuid: '89d4b612-5e6a-4154-94f3-120d03f4e891',
+                    amount: "1",
+                    currency_amount: "10",
+                    state: "pending_execution",
+                    btc_fee: "0",
+                    currency_fee: "0",
+                    updated_at: '2015-11-02T11:36:41.000Z',
+                    created_at: '2015-11-02T11:36:41.000Z',
+                    currency: 'EUR',
+                    comment: null,
+                    type: 'MarketOrder',
+                    traded_btc: "0",
+                    traded_currency: "0",
+                    direction: 'buy',
+                    price: "1000",
+                    account_operations: []
+                }
+            ]
+        }
+      ```
+
+
+    
