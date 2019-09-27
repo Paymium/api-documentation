@@ -1,0 +1,7 @@
+apiTitle: paymium
+splitSpec: false
+codeSamples: false
+swaggerUI: false
+travis: true
+repo: paymium/api-documentation
+oasVersion: '2.0'
