@@ -977,8 +977,8 @@ info:
 
     _* Authenticating users is only available to developers that have a fully verified and approved Paymium account. On the other hand, public data is available to everyone_.
     # API Changes
-    The official changelog is currently on [GitHub](https://github.com/jeromedcpaymium/api-documentation/blob/master/API-CHANGES.md).
-    You can be notified of the latest changes by watching our official [documentation repository](https://github.com/jeromedcpaymium/api-documentation).
+    The official changelog is currently on [GitHub](https://github.com/paymium/api-documentation/blob/master/API-CHANGES.md).
+    You can be notified of the latest changes by watching our official [documentation repository](https://github.com/paymium/api-documentation).
 
     # General information
     ## Formats and required HTTP request headers
