@@ -916,7 +916,7 @@ security:
   - OAuth2: [basic]
 info:
   x-logo:
-    url: https://www.paymium.com/1563550399922/images/logo@2x.png
+    url: https://raw.githubusercontent.com/Paymium/api-documentation/master/logo.png
     href: https://www.paymium.com/page/developers
   version: "1.1.0"
   title: "Paymium API"
