@@ -33,6 +33,8 @@ It's no longer necessary to specify type property with this new endpoint.
 
 > Cancel order
 
+Now returns deleted order.
+
 It replaces old endpoint:
 
     DELETE /user/orders/{uuid}/cancel
