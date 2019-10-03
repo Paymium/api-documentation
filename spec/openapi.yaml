@@ -546,6 +546,8 @@ paths:
       responses:
         200:
           description: OK
+          schema:
+            $ref: '#/definitions/Order'
   /user/orders/{uuid}/cancel:
     delete:
       summary: Cancel order
