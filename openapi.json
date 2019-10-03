@@ -83,12 +83,12 @@
         "currency_fee": {
           "type": "string",
           "description": "currency fee collected",
-          "example": 0
+          "example": "0.0"
         },
         "btc_fee": {
           "type": "string",
           "description": "btc fee collected",
-          "example": 0
+          "example": "0.0"
         },
         "comment": {
           "type": "string",
