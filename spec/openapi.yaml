@@ -544,10 +544,13 @@ paths:
           type: string
           x-example: d64e6450-bf17-44a7-9bc1-bb830610293a
       responses:
-        200:
-          description: OK
-          schema:
-            $ref: '#/definitions/Order'
+        204:
+          description: "order is cancelled"
+        404:
+          description: "order not found"
+        500:
+          description: "unable to cancel this order"
+          
   /user/orders/{uuid}/cancel:
     delete:
       summary: Cancel order
