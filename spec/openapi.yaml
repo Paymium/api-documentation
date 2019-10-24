@@ -545,7 +545,7 @@ paths:
           x-example: d64e6450-bf17-44a7-9bc1-bb830610293a
       responses:
         204:
-          description: "order is cancelled"
+          description: ""
         404:
           description: "order not found"
         500:
@@ -572,7 +572,7 @@ paths:
           type: string
           x-example: d64e6450-bf17-44a7-9bc1-bb830610293a
       responses:
-        200:
+        204:
           description: OK
   /user/withdrawals:
     post:
@@ -921,7 +921,7 @@ security:
   - OAuth2: [basic]
 info:
   x-logo:
-    url: https://raw.githubusercontent.com/Paymium/api-documentation/master/logo.png
+    url: https://raw.githubusercontent.com/Paymium/api-documentation/master/web/images/logo.png
     href: https://www.paymium.com/page/developers
   version: "1.1.0"
   title: "Paymium API"
@@ -1042,7 +1042,7 @@ tags:
 
       To display the payment request to the user, the `https://paymium.com/invoice/{UUID}` can be used, this is used by the e-commerce framework plugins.
   
-      ![invoice](https://raw.githubusercontent.com/Paymium/api-documentation/master/display-invoice.png "Invoice")
+      ![invoice](https://raw.githubusercontent.com/Paymium/api-documentation/master/web/images/display-invoice.png "Invoice")
       
   
       Once the payment request is displayed, the customer has 15 minutes to send the appropriate amount.
@@ -1061,9 +1061,6 @@ tags:
 
       Socket.io must connect to `https://paymium.com/<public or user>` and the `path` option must be set to `/ws/socket.io`.
 
-      ## Message descriptions
-
-      The Websocket messages are currently documented separately: [documentation](https://github.com/Paymium/api-documentation/blob/master/WEBSOCKETS.md).
 
       ### Node.js example
 
