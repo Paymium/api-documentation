@@ -574,7 +574,7 @@ paths:
           x-example: d64e6450-bf17-44a7-9bc1-bb830610293a
       responses:
         '204':
-          description: order is cancelled
+          description: ''
         '404':
           description: order not found
         '500':
@@ -601,7 +601,7 @@ paths:
           type: string
           x-example: d64e6450-bf17-44a7-9bc1-bb830610293a
       responses:
-        '200':
+        '204':
           description: OK
   /user/withdrawals:
     post:
@@ -963,7 +963,7 @@ security:
       - basic
 info:
   x-logo:
-    url: 'https://raw.githubusercontent.com/Paymium/api-documentation/master/logo.png'
+    url: 'https://raw.githubusercontent.com/Paymium/api-documentation/master/web/images/logo.png'
     href: 'https://www.paymium.com/page/developers'
   version: 1.1.0
   title: Paymium API
@@ -1040,7 +1040,7 @@ tags:
       * include the Paymium web interface url in an iframe in order to display a payment pop-up as an overlay,
       * redirect the buyer to the payement's URL (see below), in this case the payment is displayed on a separate screen
       To display the payment request to the user, the `https://paymium.com/invoice/{UUID}` can be used, this is used by the e-commerce framework plugins.
-      ![invoice](https://raw.githubusercontent.com/Paymium/api-documentation/master/display-invoice.png "Invoice")
+      ![invoice](https://raw.githubusercontent.com/Paymium/api-documentation/master/web/images/display-invoice.png "Invoice")
 
       Once the payment request is displayed, the customer has 15 minutes to send the appropriate amount.
       Paymium notifies the merchant of the completion of his payment via the associated callback (for which an URL may be provided when creating the payment request), once one Bitcoin confirmation for the payment is received the funds are credited to the merchant's account, a callback notification is then made.
@@ -1051,8 +1051,7 @@ tags:
       The socket.io socket will emit a `stream` event when new data is available. The received JSON data contains one or more of the properties listed below, depending on what was updated.
       ## Socket.io configuration
       Socket.io must connect to `https://paymium.com/<public or user>` and the `path` option must be set to `/ws/socket.io`.
-      ## Message descriptions
-      The Websocket messages are currently documented separately: [documentation](https://github.com/Paymium/api-documentation/blob/master/WEBSOCKETS.md).
+
       ### Node.js example
       Assuming you have node.js installed, you can install the socket.io client library by running `npm install socket.io-client`.
       The code below shows how to connect to the Paymium socket, and outputs any received data to the console.
