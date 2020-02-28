@@ -1068,12 +1068,10 @@ tags:
 
       The code below shows how to connect to the Paymium socket, and outputs any received data to the console.
 
-      The example is available in the `examples/public_socket.js` directory of this repository.
-
       ```javascript
         var io = require('socket.io-client');
 
-        var socket = io.connect('paymium.com/public', {
+        var socket = io.connect('https://www.paymium.com/public', {
         path: '/ws/socket.io'
         });
 
