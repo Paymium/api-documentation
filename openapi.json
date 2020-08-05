@@ -916,6 +916,9 @@
             "schema": {
               "$ref": "#/definitions/Order"
             }
+          },
+          "403": {
+            "description": "User must be approved."
           }
         }
       }
@@ -974,6 +977,9 @@
             "schema": {
               "$ref": "#/definitions/Order"
             }
+          },
+          "403": {
+            "description": "User must be approved."
           }
         }
       }
@@ -1065,6 +1071,9 @@
               "$ref": "#/definitions/Address"
             }
           },
+          "403": {
+            "description": "User must be approved."
+          },
           "422": {
             "description": "Too many active addresses"
           }
@@ -1097,6 +1106,9 @@
                 "$ref": "#/definitions/Address"
               }
             }
+          },
+          "403": {
+            "description": "User must be approved."
           }
         }
       }
@@ -1135,6 +1147,9 @@
             "schema": {
               "$ref": "#/definitions/Address"
             }
+          },
+          "403": {
+            "description": "User must be approved."
           },
           "404": {
             "description": "Address not found"
