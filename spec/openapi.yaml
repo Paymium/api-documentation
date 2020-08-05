@@ -607,6 +607,8 @@ paths:
           description: ""
           schema:
             $ref: '#/definitions/Order'
+        403:
+          description: User must be approved.
   /user/email_transfers:
     post:
       summary: Create email transfer
@@ -640,6 +642,8 @@ paths:
           description: ""
           schema:
             $ref: '#/definitions/Order'
+        403:
+          description: User must be approved.
   /user/payment_requests:
     post:
       summary: Create payment request
@@ -693,6 +697,8 @@ paths:
             $ref: '#/definitions/Address'
         422:
           description: Too many active addresses
+        403:
+          description: User must be approved.
     get:
       summary: List deposit addresses
       description: Retrieve your Bitcoin deposit addresses along with their expiration timestamp.
@@ -710,6 +716,8 @@ paths:
             type: array
             items: 
               $ref: '#/definitions/Address'
+        403:
+          description: User must be approved.
 
     
   /user/addresses/{address}:
@@ -736,6 +744,8 @@ paths:
             $ref: '#/definitions/Address'
         404:
           description: Address not found
+        403:
+          description: User must be approved.
           
   /user/price_alerts:
     get:
