@@ -26,6 +26,25 @@ definitions:
         type: string
         description: currency
         example: EUR
+  MarketProtection:
+    type: object
+    properties:
+      error:
+        type: string
+        description: market_protection_volume_too_large
+        example: market_protection_volume_too_large
+      max_order_amount:
+        type: string
+        description: max amount according to current market conditions to complete this market order
+        example: '4.3'
+      currency:
+        type: string
+        description: currency unit (BTC or EUR)
+        example: BTC
+      side:
+        type: string
+        description: market order side (sell or buy)
+        example: sell
   Order:
     type: object
     properties:
@@ -528,6 +547,10 @@ paths:
           description: ''
           schema:
             $ref: '#/definitions/Order'
+        '422':
+          description: 'ONLY on `MarketOrder` type, this error can occured when market order `amount` or `currency_amount` (buy or sell) is too large against current market liquidity'
+          schema:
+            $ref: '#/definitions/MarketProtection'
   '/user/orders/{uuid}':
     get:
       summary: Get order
