@@ -148,22 +148,32 @@ definitions:
     properties:
       address:
         type: string
+        example: 1HdjGr6WCTcnmW1tNNsHX7fh4Jr5C2PeKe
       valid_until:
         type: integer
         description: Expiration timestamp (Number of seconds since Unix Epoch)
+        example: 1620041926
       currency:
         type: string
         enum:
           - BTC
           - EUR
+        example: BTC
+      label:
+        type: string
+        description: A label for the wallet address
+        example: Savings
   Payment:
     type: object
     properties:
       uuid:
         type: string
         description: Payment identifier
+        example: 8f60c9df-76da-4618-906d-52af659baddf
       currency:
         type: string
+        description: Currency of the payment (EUR/BTC)
+        example: BTC
       payment_split:
         type: number
         description: Percentage of the payment the merchant will get in currency
@@ -176,32 +186,51 @@ definitions:
           - error
           - btc_forwarded
           - expired
+        example: pending_payment
       callback_url:
         type: string
         description: merchant notification url
+        example: 'https://myonlineshop/payments/order-987978/callback'
       redirect_url:
         type: string
         description: Redirection url to which the customer is redirected on success
+        example: 'http://myonlineshop/payments/order-987978/success'
+      cancel_url:
+        type: string
+        description: URL to which the customer should be redirected when cancelling
+        example: 'http://myonlineshop/payments/order-987978/cancel'
       merchant_name:
         type: string
+        description: Internal name of the merchant
+        example: PM-U24582195
       expires_at:
         type: integer
         description: expiration timestamp (Number of seconds since Unix Epoch)
+        example: 1619449070
       merchant_reference:
         type: string
+        description: merchant reference for the order
+        example: order-987978
       amount:
         type: string
+        description: amount of the payment in the choosen currency
+        example: '0.0001'
       btc_amount:
         type: string
         description: BTC amount to pay
+        example: '0.0001'
       payment_address:
         type: string
+        description: wallet address for the payment
+        example: 1H7X3bH8r5snj8vqXRCPnQ8Ewn6AHfVd9j
       created_at:
         type: integer
-        description: creation timestamp
+        description: creation timestamp (Number of seconds since Unix Epoch)
+        example: 1619447270
       updated_at:
         type: integer
-        description: Last update timestamp
+        description: Last update timestamp (Number of seconds since Unix Epoch)
+        example: 1619447270
       account_operations:
         $ref: '#/definitions/AccountOperation'
 paths:
@@ -222,48 +251,75 @@ paths:
               properties:
                 id:
                   type: integer
-                  description: country id
+                  description: Country ID in Paymium
                 accepted:
                   type: boolean
-                  description: we currently serve the residents of countries when the flag is set to true
+                  description: We currently serve the residents of countries when the flag is set to true
                 card_partner_accepted:
                   type: boolean
+                  description: Describes whether our card partner is accepted for this country or not
                 iso_alpha2:
                   type: string
-                  description: ''
+                  description: ISO 3166-1 alpha-2 country code
                   example: FR
                 iso_alpha3:
                   type: string
-                  description: ''
+                  description: ISO 3166-1 alpha-3 country code
                   example: FRA
                 iso_numeric:
                   type: integer
-                  description: ''
+                  description: ISO 3166-1 numeric country code
                   example: 250
                 name_en:
                   type: string
-                  description: 'english name,'
+                  description: 'English name,'
                   example: France
                 name_fr:
                   type: string
-                  description: french name
+                  description: French name
                   example: France
                 name_es:
                   type: string
-                  description: spanish name
+                  description: Spanish name
                   example: Francia
                 name_de:
                   type: string
-                  description: deutch name
+                  description: Deutch name
                   example: Frankreich
                 name_it:
                   type: string
-                  description: italian name
+                  description: Italian name
                   example: Francia
                 telephone_code:
                   type: integer
-                  description: ''
+                  description: Country dialing code
                   example: 33
+      x-code-samples:
+        - lang: Javascript
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_SECRET_PRIVATE_KEY',
+              })
+
+              console.log(paymium.id, await paymium.publicGetCountries())
+            })();
+        - lang: Python
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.publicGetCountries())
   '/data/{currency}/ticker':
     get:
       summary: Get latest ticker data
@@ -288,33 +344,85 @@ paths:
               high:
                 type: string
                 description: 24h high price
+                example: '45998.99'
               low:
                 type: string
                 description: 24h low price
+                example: '37210.0'
               volume:
                 type: string
                 description: 24h volume
+                example: '39.77651173'
               bid:
                 type: string
                 description: bid price
+                example: '40600.0'
               ask:
                 type: string
                 description: ask price
+                example: '40783.75'
               midpoint:
                 type: string
                 description: midpoint price
+                example: '40691.875'
+              vwap:
+                type: string
+                description: Volume-Weighted Average Price
+                example: '40509.86537845'
               at:
                 type: integer
                 description: timestamp
+                example: 1619184394
               price:
                 type: string
                 description: price of latest trade
+                example: '40600.0'
+              open:
+                type: string
+                description: 24h open price
+                example: '45998.99'
               variation:
                 type: string
                 description: 24h variation (percentage)
+                example: '-11.7372'
               currency:
                 type: string
-                description: currency
+                description: ISO 4217 currency code
+                example: EUR
+              trade_id:
+                type: string
+                description: ID of the latest trade on Paymium
+                example: 0a31a001-2deb-48f1-b413-f1a31a9f97c1
+              size:
+                type: string
+                description: Amount in BTC of the latest trade on Paymium
+                example: '0.0052'
+      x-code-samples:
+        - lang: Javascript
+          source: |
+            'use strict';
+            const ccxt = require('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_PRIVATE_API_KEY',
+              })
+
+              console.log(paymium.id, await paymium.publicGetDataCurrencyTicker({ "currency": "eur" }))
+            })();
+        - lang: Python
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.publicGetDataCurrencyTicker({"currency": 'eur'}))
   '/data/{currency}/trades':
     get:
       summary: List latest trades
@@ -363,6 +471,10 @@ paths:
                   type: string
                   description: currency
                   example: EUR
+                side:
+                  type: string
+                  description: order type ("buy" or "sell")
+                  example: buy
                 price:
                   type: string
                   description: price per BTC
@@ -371,6 +483,32 @@ paths:
                   type: integer
                   description: Number of seconds since Unix Epoch of the trade
                   example: 1389094259
+      x-code-samples:
+        - lang: Javascript
+          source: |
+            'use strict';
+            const ccxt = require('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_PRIVATE_API_KEY',
+              })
+
+              console.log(paymium.id, await paymium.publicGetDataCurrencyTrades({ "currency": "eur" }))
+            })();
+        - lang: Python
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.publicGetDataCurrencyTrades({"currency": 'eur'}))
   '/data/{currency}/depth':
     get:
       summary: Get market depth
@@ -400,6 +538,32 @@ paths:
                 type: array
                 items:
                   $ref: '#/definitions/TradeOrder'
+      x-code-samples:
+        - lang: Javascript
+          source: |
+            'use strict';
+            const ccxt = require('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_PRIVATE_API_KEY',
+              })
+
+              console.log(paymium.id, await paymium.publicGetDataCurrencyDepth({ "currency": "eur" }))
+            })();
+        - lang: Python
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.publicGetDataCurrencyDepth({"currency": 'eur'}))
   /user:
     get:
       summary: Get user info
@@ -443,6 +607,14 @@ paths:
                 type: string
                 description: BTC balance locked in trading
                 example: '1.0'
+              balance_lbtc:
+                type: string
+                description: available LBTC balance
+                example: '0.8'
+              locked_lbtc:
+                type: string
+                description: LBTC balance locked in trading
+                example: '0.5'
               balance_eur:
                 type: string
                 description: available EUR balance
@@ -451,6 +623,32 @@ paths:
                 type: string
                 description: EUR balance locked in trading
                 example: '300.00743886'
+      x-code-samples:
+        - lang: Javascript
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_SECRET_PRIVATE_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privateGetUser())
+            })();
+        - lang: Python
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privateGetUser())
   /user/orders:
     get:
       summary: List orders
@@ -497,6 +695,32 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Order'
+      x-code-samples:
+        - lang: Javascript
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_SECRET_PRIVATE_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privateGetUserOrders())
+            })();
+        - lang: Python
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privateGetUserOrders())
     post:
       summary: Create order
       tags:
@@ -551,6 +775,32 @@ paths:
           description: 'ONLY on `MarketOrder` type, this error can occured when market order `amount` or `currency_amount` (buy or sell) is too large against current market liquidity'
           schema:
             $ref: '#/definitions/MarketProtection'
+      x-code-samples:
+        - lang: Javascript
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_SECRET_PRIVATE_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privatePostUserOrders({ "type": "LimitOrder", "currency": "EUR", "direction": "buy", "price": "54000", "currency_amount": "100" }))
+            })();
+        - lang: Python
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privatePostUserOrders({ "type": "LimitOrder", "currency": "EUR", "direction": "buy", "price": "54000", "currency_amount": "100" }))
   '/user/orders/{uuid}':
     get:
       summary: Get order
@@ -576,6 +826,32 @@ paths:
             $ref: '#/definitions/Order'
         '404':
           description: order not found
+      x-code-samples:
+        - lang: Javascript
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_SECRET_PRIVATE_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privateGetUserOrdersUuid({ "uuid": "20f8dd15-ae87-4617-a353-d0996be60010" }))
+            })();
+        - lang: Python
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privateGetUserOrdersUuid({ "uuid": "20f8dd15-ae87-4617-a353-d0996be60010" }))
     delete:
       summary: Cancel order
       description: Only active trade orders and email transfers may be canceled
@@ -602,6 +878,32 @@ paths:
           description: order not found
         '500':
           description: unable to cancel this order
+      x-code-samples:
+        - lang: Javascript
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_SECRET_PRIVATE_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privateDeleteUserOrdersUuid({ "uuid": "20f8dd15-ae87-4617-a353-d0996be60010" }))
+            })();
+        - lang: Python
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privateDeleteUserOrdersUuid({ "uuid": "20f8dd15-ae87-4617-a353-d0996be60010" }))
   '/user/orders/{uuid}/cancel':
     delete:
       summary: Cancel order
@@ -664,6 +966,32 @@ paths:
             $ref: '#/definitions/Order'
         '403':
           description: User must be approved.
+      x-code-samples:
+        - lang: Javascript
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_SECRET_PRIVATE_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privatePostUserWithdrawals({ "currency": "BTC", "amount": "1.0", "address": "1HdjGr6WCTcnmW1tNNsHX7fh4Jr5C2PeKe" }))
+            })();
+        - lang: Python
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privatePostUserWithdrawals({ "currency": "BTC", "amount": "1.0", "address": "1HdjLr5WCThbmW1tNNsFX7fh4Jr5C3PeKe" }))
   /user/email_transfers:
     post:
       summary: Create email transfer
@@ -702,6 +1030,32 @@ paths:
             $ref: '#/definitions/Order'
         '403':
           description: User must be approved.
+      x-code-samples:
+        - lang: Javascript
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_SECRET_PRIVATE_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privatePostUserEmailTransfers({ "currency": "BTC", "amount": "1.0", "email": "johnsmith@example.com", "comment": "For your savings" }))
+            })();
+        - lang: Python
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privatePostUserEmailTransfers({ "currency": "BTC", "amount": "1.0", "email": "johnsmith@example.com", "comment": "For your savings" }))
   /user/payment_requests:
     post:
       summary: Create payment request
@@ -740,6 +1094,32 @@ paths:
       responses:
         '201':
           description: ''
+      x-code-samples:
+        - lang: Javascript
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_SECRET_PRIVATE_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privatePostUserPaymentRequests({ "currency": "BTC", "amount": "0.001", "email": "johnsmith@example.com", "comment": "For the restaurant", "payment_split": "0" }))
+            })();
+        - lang: Python
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privatePostUserPaymentRequests({ "currency": "BTC", "amount": "1.0", "email": "johnsmith@example.com", "comment": "For the restaurant", "payment_split": "0.5" }))
   /user/addresses:
     post:
       summary: Create deposit address
@@ -752,6 +1132,13 @@ paths:
           ApiNonce: []
         - OAuth2:
             - deposit
+      parameters:
+        - in: query
+          name: label
+          required: false
+          type: string
+          description: A label for the wallet address
+          x-example: Savings
       responses:
         '201':
           description: ''
@@ -761,6 +1148,32 @@ paths:
           description: User must be approved.
         '422':
           description: Too many active addresses
+      x-code-samples:
+        - lang: Javascript
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_SECRET_PRIVATE_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privatePostUserAddresses())
+            })();
+        - lang: Python
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privatePostUserAddresses())
     get:
       summary: List deposit addresses
       description: Retrieve your Bitcoin deposit addresses along with their expiration timestamp.
@@ -781,6 +1194,32 @@ paths:
               $ref: '#/definitions/Address'
         '403':
           description: User must be approved.
+      x-code-samples:
+        - lang: Javascript
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_SECRET_PRIVATE_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privateGetUserAddresses())
+            })();
+        - lang: Python
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privateGetUserAddresses())
   '/user/addresses/{address}':
     get:
       summary: Get deposit address
@@ -808,6 +1247,32 @@ paths:
           description: User must be approved.
         '404':
           description: Address not found
+      x-code-samples:
+        - lang: Javascript
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_SECRET_PRIVATE_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privateGetUserAddressesAddress({"address": "1HdjGr5WCHcnmW1tNNsHX7fh4Jr6C3PeKe" }))
+            })();
+        - lang: Python
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privateGetUserAddressesAddress({"address": "1HdjGr5WCHcnmW1tNNsHX7fh4Jr6C3PeKe"})))
   /user/price_alerts:
     get:
       summary: List price alerts
@@ -835,12 +1300,41 @@ paths:
               notify_above:
                 type: number
                 example: 220.5
+                description: Notify when price climbs above this limit
               notify_below:
                 type: number
                 example: 180
+                description: Notify when price falls below this limit
               last_sent_at:
                 type: integer
                 example: 1445610041
+                description: Date of last notification (Number of seconds since Unix Epoch)
+      x-code-samples:
+        - lang: Javascript
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_SECRET_PRIVATE_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privateGetUserPriceAlerts())
+            })();
+        - lang: Python
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privateGetUserPriceAlerts())
     post:
       summary: Create price alert
       tags:
@@ -864,6 +1358,32 @@ paths:
       responses:
         '201':
           description: ''
+      x-code-samples:
+        - lang: Javascript
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_SECRET_PRIVATE_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privateGetUserPriceAlerts({ "token": "0ff2f39d-cd9f-4710-9eb5-3f8385f5e059", "notify_above": "60000", "notify_below": "40000" }))
+            })();
+        - lang: Python
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privateGetUserPriceAlerts({ "token": "0ff2f39d-cd9f-4710-9eb5-3f8385f5e059", "notify_above": "60000", "notify_below": "40000" }))
   '/user/price_alerts/{id}':
     delete:
       summary: Delete price alert
@@ -884,6 +1404,32 @@ paths:
       responses:
         '200':
           description: ''
+      x-code-samples:
+        - lang: Javascript
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_SECRET_PRIVATE_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privateDeleteUserPriceAlertsId({ "id": 11021 }))
+            })();
+        - lang: Python
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privateDeleteUserPriceAlertsId({ "id": 11021 }))
   /merchant/create_payment:
     post:
       summary: Create merchant payment
@@ -927,6 +1473,11 @@ paths:
           description: URL to which the customer should be redirected at upon payment
           x-example: 'http://myonlineshop/payments/order-987978/success'
         - in: query
+          name: cancel_url
+          type: string
+          description: URL to which the customer should be redirected when cancelling
+          x-example: 'http://myonlineshop/payments/order-987978/cancel'
+        - in: query
           name: merchant_reference
           type: string
           description: Arbitrary merchant data associated to the payment
@@ -936,6 +1487,46 @@ paths:
           description: ''
           schema:
             $ref: '#/definitions/Payment'
+      x-code-samples:
+        - lang: Javascript
+          source: |
+            'use strict';
+            const ccxt = require('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_PRIVATE_API_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privatePostMerchantCreatePayment({
+                "amount": "0.0001",
+                "payment_split": "0",
+                "currency": "BTC",
+                "callback_url": "https://myonlineshop/payments/order-987978/callback",
+                "redirect_url": "http://myonlineshop/payments/order-987978/success",
+                "merchant_reference": "order-987978"
+              }))
+            })();
+        - lang: Python
+          source: |-
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privatePostMerchantCreatePayment({
+              "amount": "0.0001",
+              "payment_split": "0",
+              "currency": "BTC",
+              "callback_url": "https://myonlineshop/payments/order-987978/callback",
+              "redirect_url": "http://myonlineshop/payments/order-987978/success",
+              "merchant_reference": "order-987978"
+            }))
   '/merchant/get_payment/{uuid}':
     get:
       summary: Get merchant payment
@@ -959,6 +1550,32 @@ paths:
           description: ''
           schema:
             $ref: '#/definitions/Payment'
+      x-code-samples:
+        - lang: Javascript
+          source: |
+            'use strict';
+            const ccxt = require('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_PRIVATE_API_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privateGetMerchantGetPaymentUuid({ "uuid": "0a31a001-2deb-48f1-b413-f1a31a9f97c1" }))
+            })();
+        - lang: Python
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privateGetMerchantGetPaymentUuid({ "uuid": "0a31a001-2deb-48f1-b413-f1a31a9f97c1" }))
 securityDefinitions:
   ApiKey:
     type: apiKey
@@ -1051,6 +1668,11 @@ info:
         X-Ratelimit-Limit: 5000
         X-Ratelimit-Remaining: 4982
         Date: Wed, 30 Jan 2013 12:08:58 GMT
+
+    ## Examples
+    Examples in the documentation are using the `ccxt` library, which supports Paymium's API and is available for Python, JavaScript and PHP.
+
+    Installation instructions can be found on [GitHub](https://github.com/ccxt/ccxt).
 tags:
   - name: Public data
     description: 'Public data (ticker, asks, bids, trades) can be accessed without authentication.'
