@@ -149,52 +149,81 @@ definitions:
     properties:
       address:
         type: string
+        example: 1HdjGr6WCTcnmW1tNNsHX7fh4Jr5C2PeKe
       valid_until:
         type: integer
         description: Expiration timestamp (Number of seconds since Unix Epoch)
+        example: 1620041926
       currency:
         type: string
         enum: [BTC, EUR]
+        example: BTC
+      label:
+        type: string
+        description: A label for the wallet address
+        example: Savings
   Payment:
     type: object
     properties:
       uuid:
         type: string
         description: Payment identifier
+        example: '8f60c9df-76da-4618-906d-52af659baddf'
       currency:
         type: string
+        description: Currency of the payment (EUR/BTC)
+        example: 'BTC'
       payment_split:
         type: number
         description: Percentage of the payment the merchant will get in currency
       state:
         type: string
         enum: [pending_payment, processing, paid, error, btc_forwarded, expired]
+        example: 'pending_payment'
       callback_url:
         type: string
         description: merchant notification url
+        example: 'https://myonlineshop/payments/order-987978/callback'
       redirect_url:
         type: string
         description: Redirection url to which the customer is redirected on success
+        example: 'http://myonlineshop/payments/order-987978/success'
+      cancel_url:
+        type: string
+        description: URL to which the customer should be redirected when cancelling
+        example: 'http://myonlineshop/payments/order-987978/cancel'
       merchant_name:
         type: string
+        description: Internal name of the merchant
+        example: 'PM-U24582195'
       expires_at:
         type: integer
         description: expiration timestamp (Number of seconds since Unix Epoch)
+        example: 1619449070
       merchant_reference:
         type: string
+        description: merchant reference for the order
+        example: order-987978
       amount:
         type: string
+        description: amount of the payment in the choosen currency
+        example: '0.0001'
       btc_amount:
         type: string
         description: BTC amount to pay
+        example: '0.0001'
       payment_address:
         type: string
+        description: wallet address for the payment
+        example: '1H7X3bH8r5snj8vqXRCPnQ8Ewn6AHfVd9j'
       created_at:
         type: integer
-        description: creation timestamp
+        description: creation timestamp (Number of seconds since Unix Epoch)
+        example: 1619447270
       updated_at:
         type: integer
-        description: Last update timestamp
+        description: Last update timestamp (Number of seconds since Unix Epoch)
+        example: 1619447270
       account_operations: 
         $ref: '#/definitions/AccountOperation'
 paths:
@@ -215,47 +244,48 @@ paths:
               properties: 
                 id:
                   type: integer
-                  description: country id
+                  description: Country ID in Paymium
                 accepted: 
                   type: boolean
-                  description: we currently serve the residents of countries when the flag is set to true
+                  description: We currently serve the residents of countries when the flag is set to true
                 card_partner_accepted:
                   type: boolean
+                  description: Describes whether our card partner is accepted for this country or not
                 iso_alpha2:
                   type: string
-                  description: ""
+                  description: ISO 3166-1 alpha-2 country code
                   example: "FR"
                 iso_alpha3: 
                   type: string
-                  description: ""
+                  description: ISO 3166-1 alpha-3 country code
                   example: "FRA"
                 iso_numeric: 
                   type: integer
-                  description: ""
+                  description: ISO 3166-1 numeric country code
                   example: 250
                 name_en: 
                   type: string
-                  description: english name,
+                  description: English name,
                   example: "France"
                 name_fr: 
                   type: string
-                  description: french name
+                  description: French name
                   example: "France"
                 name_es: 
                   type: string
-                  description: spanish name
+                  description: Spanish name
                   example: "Francia"
                 name_de:
                   type: string
-                  description: deutch name
+                  description: Deutch name
                   example: "Frankreich"
                 name_it:
                   type: string
-                  description: italian name
+                  description: Italian name
                   example: "Francia"
                 telephone_code:
                   type: integer
-                  description: ""
+                  description: Country dialing code
                   example: 33
   /data/{currency}/ticker:
     get:
@@ -279,33 +309,59 @@ paths:
               high:
                 type: string
                 description: 24h high price
+                example: "45998.99"
               low:
                 type: string
                 description: 24h low price
+                example: "37210.0"
               volume:
                 type: string
                 description: 24h volume
+                example: "39.77651173"
               bid: 
                 type: string
                 description: bid price
+                example: "40600.0"
               ask:
                 type: string
                 description: ask price
+                example: "40783.75"
               midpoint:
                 type: string
                 description: midpoint price
+                example: "40691.875"
+              vwap:
+                type: string
+                description: Volume-Weighted Average Price
+                example: "40509.86537845"
               at: 
                 type: integer
                 description: timestamp
+                example: 1619184394
               price: 
                 type: string
                 description: price of latest trade
+                example: "40600.0"
+              open:
+                type: string
+                description: 24h open price
+                example: "45998.99"
               variation:
                 type: string
                 description: 24h variation (percentage)
+                example: "-11.7372"
               currency:
                 type: string
-                description: currency
+                description: ISO 4217 currency code
+                example: "EUR"
+              trade_id:
+                type: string
+                description: ID of the latest trade on Paymium
+                example: "0a31a001-2deb-48f1-b413-f1a31a9f97c1"
+              size:
+                type: string
+                description: Amount in BTC of the latest trade on Paymium
+                example: '0.0052'
   /data/{currency}/trades:
     get:
       summary: List latest trades
@@ -352,6 +408,10 @@ paths:
                   type: string
                   description: currency
                   example: "EUR"
+                side:
+                  type: string
+                  description: order type ("buy" or "sell")
+                  example: "buy"
                 price:
                   type: string
                   description: price per BTC
@@ -429,6 +489,14 @@ paths:
                 type: string
                 description: BTC balance locked in trading
                 example: "1.0"
+              balance_lbtc:
+                type: string
+                description: available LBTC balance
+                example: "0.8"
+              locked_lbtc:
+                type: string
+                description: LBTC balance locked in trading
+                example: "0.5"
               balance_eur:
                 type: string
                 description: available EUR balance
@@ -714,6 +782,13 @@ paths:
           ApiSignature: []
           ApiNonce: []
         - OAuth2: [deposit]
+      parameters:
+        - in: query
+          name: label
+          required: false
+          type: string
+          description: A label for the wallet address
+          x-example: "Savings"
       responses:
         201:
           description: ""
@@ -797,12 +872,15 @@ paths:
               notify_above:
                 type: number
                 example: 220.5
+                description: Notify when price climbs above this limit
               notify_below:
                 type: number
                 example: 180.0
+                description: Notify when price falls below this limit
               last_sent_at:
                 type: integer
                 example: 1445610041
+                description: Date of last notification (Number of seconds since Unix Epoch)
     post:
       summary: Create price alert
       tags:
@@ -883,6 +961,11 @@ paths:
           type: string
           description: URL to which the customer should be redirected at upon payment
           x-example: http://myonlineshop/payments/order-987978/success
+        - in: query
+          name: cancel_url
+          type: string
+          description: URL to which the customer should be redirected when cancelling
+          x-example: http://myonlineshop/payments/order-987978/cancel
         - in: query
           name: merchant_reference
           type: string
@@ -1039,6 +1122,13 @@ info:
         X-Ratelimit-Limit: 5000
         X-Ratelimit-Remaining: 4982
         Date: Wed, 30 Jan 2013 12:08:58 GMT
+
+    ## Examples
+
+    Examples in the documentation are using the `ccxt` library, which supports Paymium's API and is available for Python, JavaScript and PHP.
+    
+    
+    Installation instructions can be found on [GitHub](https://github.com/ccxt/ccxt).
 
 
 tags:
