@@ -1,11 +1,11 @@
 swagger: "2.0"
 host: "paymium.com"
 basePath: "/api/v1"
-schemes: 
+schemes:
   - https
 consumes:
   - application/json
-produces: 
+produces:
   - application/json; charset=utf-8
 definitions:
   TradeOrder:
@@ -22,7 +22,7 @@ definitions:
       price:
         type: string
         example: "664"
-      currency: 
+      currency:
         type: string
         description: currency
         example: "EUR"
@@ -105,7 +105,7 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/AccountOperation'
-          
+
   AccountOperation:
     type: object
     properties:
@@ -224,7 +224,7 @@ definitions:
         type: integer
         description: Last update timestamp (Number of seconds since Unix Epoch)
         example: 1619447270
-      account_operations: 
+      account_operations:
         $ref: '#/definitions/AccountOperation'
 paths:
   /countries:
@@ -237,15 +237,15 @@ paths:
       responses:
         200:
           description: An array of countries
-          schema: 
+          schema:
             type: array
             items:
               type: object
-              properties: 
+              properties:
                 id:
                   type: integer
                   description: Country ID in Paymium
-                accepted: 
+                accepted:
                   type: boolean
                   description: We currently serve the residents of countries when the flag is set to true
                 card_partner_accepted:
@@ -255,23 +255,23 @@ paths:
                   type: string
                   description: ISO 3166-1 alpha-2 country code
                   example: "FR"
-                iso_alpha3: 
+                iso_alpha3:
                   type: string
                   description: ISO 3166-1 alpha-3 country code
                   example: "FRA"
-                iso_numeric: 
+                iso_numeric:
                   type: integer
                   description: ISO 3166-1 numeric country code
                   example: 250
-                name_en: 
+                name_en:
                   type: string
                   description: English name,
                   example: "France"
-                name_fr: 
+                name_fr:
                   type: string
                   description: French name
                   example: "France"
-                name_es: 
+                name_es:
                   type: string
                   description: Spanish name
                   example: "Francia"
@@ -287,6 +287,69 @@ paths:
                   type: integer
                   description: Country dialing code
                   example: 33
+  /data/{currency}/ohlcv:
+    get:
+      summary: Get OHLCV
+      description: Read open high low close volume data
+      tags:
+        - Public data
+      security: []
+      parameters:
+        - in: path
+          name: currency
+          required: true
+          type: string
+          enum: [eur]
+        - in: query
+          required: false
+          name: startTime
+          type: integer
+          description: Number of seconds since the Unix Epoch of the oldest ohlcv to fetch.
+        - in: query
+          name: endTime
+          required: false
+          type: integer
+          description: Number of seconds since the Unix Epoch of the last ohlcv to fetch.
+        - in: query
+          name: interval
+          required: false
+          type: string
+          enum: ['1m','3m','5m','15m','30m','1h','2h','4h','6h','8h','12h','1d','3d','1w','1M']
+          description: Interval between each ohlcv compute. Iteration can not exceed 1000 (default 500)
+      responses:
+        400:
+          description: ""
+          schema:
+            type: object
+            properties:
+              errors:
+                type: string
+                description: The error description
+                enum: ['Interval / StartTime / EndTime does not match', 'Limit has not correct range']
+                example: 'Interval / StartTime / EndTime does not match'
+        200:
+          description: ""
+          schema:
+            type: array
+            items:
+              type: array
+              items:
+                - type: timestamp
+                - type: string (open)
+                - type: string (high)
+                - type: string (low)
+                - type: string (close)
+                - type: string (volume)
+            example: [[
+              1615816800000,
+              "47440.0",
+              "50000.0",
+              "42000.0",
+              "43000.0",
+              "0.05321696"
+              ]]
+
+
   /data/{currency}/ticker:
     get:
       summary: Get latest ticker data
@@ -303,7 +366,7 @@ paths:
       responses:
         200:
           description: ""
-          schema: 
+          schema:
             type: object
             properties:
               high:
@@ -318,7 +381,7 @@ paths:
                 type: string
                 description: 24h volume
                 example: "39.77651173"
-              bid: 
+              bid:
                 type: string
                 description: bid price
                 example: "40600.0"
@@ -334,11 +397,11 @@ paths:
                 type: string
                 description: Volume-Weighted Average Price
                 example: "40509.86537845"
-              at: 
+              at:
                 type: integer
                 description: timestamp
                 example: 1619184394
-              price: 
+              price:
                 type: string
                 description: price of latest trade
                 example: "40600.0"
@@ -387,7 +450,7 @@ paths:
             items:
               type: object
               properties:
-                uuid: 
+                uuid:
                   type: string
                   description: unique ID of trade
                   example: "59f9c458-cb22-48d6-9103-0b6e54130e29"
@@ -404,7 +467,7 @@ paths:
                   format: date-time
                   description: date created
                   example: "2014-01-07T11:30:59Z"
-                currency: 
+                currency:
                   type: string
                   description: currency
                   example: "EUR"
@@ -439,7 +502,7 @@ paths:
           schema:
             type: object
             properties:
-              bids: 
+              bids:
                 type: array
                 items:
                   $ref: '#/definitions/TradeOrder'
@@ -528,7 +591,7 @@ paths:
         - in: query
           name: types
           type: array
-          description: filter by types 
+          description: filter by types
           items:
             type: string
             enum: [LimitOrder, MarketOrder, BitcoinDeposit, WireDeposit, Payment, EmailTransfer, EmailDeposit]
@@ -592,7 +655,7 @@ paths:
           description: "ONLY on `MarketOrder` type, this error can occured when market order `amount` or `currency_amount` (buy or sell) is too large against current market liquidity"
           schema:
             $ref: '#/definitions/MarketProtection'
-          
+
   /user/orders/{uuid}:
     get:
       summary: Get order
@@ -642,7 +705,7 @@ paths:
           description: "order not found"
         500:
           description: "unable to cancel this order"
-          
+
   /user/orders/{uuid}/cancel:
     delete:
       summary: Cancel order
@@ -813,12 +876,12 @@ paths:
           description: ""
           schema:
             type: array
-            items: 
+            items:
               $ref: '#/definitions/Address'
         403:
           description: User must be approved.
 
-    
+
   /user/addresses/{address}:
     get:
       summary: Get deposit address
@@ -845,7 +908,7 @@ paths:
           description: Address not found
         403:
           description: User must be approved.
-          
+
   /user/price_alerts:
     get:
       summary: List price alerts
@@ -974,7 +1037,7 @@ paths:
       responses:
         201:
           description: ""
-          schema: 
+          schema:
             $ref: "#/definitions/Payment"
   /merchant/get_payment/{uuid}:
     get:
@@ -997,10 +1060,10 @@ paths:
         200:
           description: ""
           schema:
-            $ref: "#/definitions/Payment"         
-          
-        
-        
+            $ref: "#/definitions/Payment"
+
+
+
 securityDefinitions:
   ApiKey:
     type: apiKey
@@ -1023,7 +1086,7 @@ securityDefinitions:
     authorizationUrl: https://paymium.com/api/oauth/authorize
     tokenUrl: https://paymium.com/api/oauth/token
     scopes:
-      basic: Read account number, language, and balances (default) 
+      basic: Read account number, language, and balances (default)
       activity: Read trade orders, deposits, withdrawals, and other operations
       trade: Create and cancel trade orders
       withdraw: Request EUR and BTC withdrawals (requires email confirmation from users upon withdrawing)
@@ -1045,7 +1108,7 @@ info:
   termsOfService: "https://www.paymium.com/page/tos"
   contact:
       email: "support@paymium.com"
-  description: > 
+  description: >
     The Paymium API allows developers to extend the capabilities of the Paymium platform, from reading the latest ticker to automating trades with bots.
 
 
@@ -1063,12 +1126,12 @@ info:
     _* Authenticating users is only available to developers that have a fully verified and approved Paymium account. On the other hand, public data is available to everyone_.
 
     # API Changes
-    
+
     The official changelog is currently on [GitHub](https://github.com/paymium/api-documentation/blob/master/API-CHANGES.md).
-    
+
     You can be notified of the latest changes by watching our official [documentation repository](https://github.com/paymium/api-documentation).
 
-    
+
     # General information
 
     ## Formats and required HTTP request headers
@@ -1099,15 +1162,15 @@ info:
         "Operations account operations amount is greater than your available balance (1781.96 EUR)"
         "Amount can't be greater than your limit (1781.96 EUR)"
         ]
-      } 
+      }
     ```
-    
+
     ## Successful calls
 
     If the API call was successful, the platform will answer with:
 
     * An HTTP 200 status (OK) or HTTP 201 (Created),
-    
+
     * A JSON representation of the entity being created or updated if relevant
 
     ## Rate-limiting
@@ -1117,7 +1180,7 @@ info:
 
     **Example response with rate-limit headers**
 
-        HTTP/1.1 200  
+        HTTP/1.1 200
         Content-Type: application/json; charset=utf-8
         X-Ratelimit-Limit: 5000
         X-Ratelimit-Remaining: 4982
@@ -1126,8 +1189,8 @@ info:
     ## Examples
 
     Examples in the documentation are using the `ccxt` library, which supports Paymium's API and is available for Python, JavaScript and PHP.
-    
-    
+
+
     Installation instructions can be found on [GitHub](https://github.com/ccxt/ccxt).
 
 
@@ -1147,7 +1210,7 @@ tags:
       For merchants that have very simple needs payment buttons are also available, these buttons remove the integration completely by allowing merchants to simply include a code snippet on a static HTML page, or on a blog to receive fixed-amount payments.
 
       # Payment creation
-      
+
       ## Authentication
 
       _The 'merchant token' authentication mechanism has been removed please use an [API token](#token-authentication) or an [OAuth2 token](#oauth2-authentication) instead with the 'merchant' scope._
@@ -1157,26 +1220,26 @@ tags:
       A payment is created by a merchant platform when the customer chooses Bitcoin as his desired checkout option.
 
       The merchant platform can then :
-  
+
       * display the payment Bitcoin address on his own web interface,
-  
+
       * include the Paymium web interface url in an iframe in order to display a payment pop-up as an overlay,
-  
+
       * redirect the buyer to the payement's URL (see below), in this case the payment is displayed on a separate screen
 
       To display the payment request to the user, the `https://paymium.com/invoice/{UUID}` can be used, this is used by the e-commerce framework plugins.
-  
+
       ![invoice](https://raw.githubusercontent.com/Paymium/api-documentation/master/web/images/display-invoice.png "Invoice")
-      
-  
+
+
       Once the payment request is displayed, the customer has 15 minutes to send the appropriate amount.
-  
+
       Paymium notifies the merchant of the completion of his payment via the associated callback (for which an URL may be provided when creating the payment request), once one Bitcoin confirmation for the payment is received the funds are credited to the merchant's account, a callback notification is then made.
-      
+
   - name: WebSocket
     description: >
       # Overview
-      
+
       A [socket.io](http://socket.io) endpoint is available to receive public data. This allows you to receive new data without having to poll the server.
 
       The socket.io socket will emit a `stream` event when new data is available. The received JSON data contains one or more of the properties listed below, depending on what was updated.
@@ -1215,56 +1278,56 @@ tags:
           console.log(data);
         });
       ```
-      
+
       Websockets are implemented using **socket.io v1.3**.
-      
+
       # Public socket
-      
+
       ## Subscribing
-      
+
       You must connect your socket.io client to `paymium.com/public`, setting the path
       option to `/ws/socket.io`. When new data is available, a `stream` event is
       triggered.
-      
+
       ## NodeJS example
-      
-      
+
+
       ```javascript
         var io = require('socket.io-client');
-      
+
         var socket = io.connect('https://www.paymium.com/public', {
         path: '/ws/socket.io'
         });
-      
+
         console.log('CONNECTING');
-        
+
         socket.on('connect', function() {
         console.log('CONNECTED');
         console.log('WAITING FOR DATA...');
         });
-        
+
         socket.on('disconnect', function() {
         console.log('DISCONNECTED');
         });
-        
+
         socket.on('stream', function(publicData) {
         console.log('GOT DATA:');
         console.log(publicData);
         });
       ```
-      
+
       ## Public data
-      
+
       The `stream` event will emit an object when new data is available. The object
       will have properties **only for the data that changed**.
-      
+
       ### publicData.ticker
-      
+
       If the ticker changed, `publicData.ticker` will contains the new ticker
       information.
-      
+
       Example:
-      
+
       ```javascript
         {
         ticker: {
@@ -1284,14 +1347,14 @@ tags:
           }
         }
       ```
-      
+
       ### publicData.trades
-      
+
       If new trades are executed, `publicData.trades` will be an array containing the
       new trades.
-      
+
       Example:
-      
+
       ```javascript
         {
             trades: [
@@ -1304,15 +1367,15 @@ tags:
             ]
         }
       ```
-      
+
       ### publicData.bids
-      
+
       If buy orders have changed (created, changed, or deleted), `publicData.bids`
       will be an array containing the modified orders. Orders are aggregated by price.
       If `amount` is `0`, there are no more orders at this price.
-      
+
       Example:
-      
+
       ```javascript
         {
             bids: [
@@ -1325,15 +1388,15 @@ tags:
             ]
         }
       ```
-      
+
       ### publicData.asks
-      
+
       If sell orders have changed (created, changed, or deleted), `publicData.asks`
       will be an array containing the modified orders. Orders are aggregated by price.
       If `amount` is `0`, there are no more orders at this price.
-      
+
       Example:
-      
+
       ```javascript
         {
             asks: [
@@ -1346,105 +1409,105 @@ tags:
             ]
         }
       ```
-      
+
       # User socket
-      
+
       ## Subscribing
-      
+
       You must connect your socket.io client to `https://www.paymium.com/user`, setting the path
       option to `/ws/socket.io`.
-      
+
       You must emit a `channel` event with the user channel id. This channel id is
       available in the user's json (`/api/v1/user`).
-      
+
       When new data is available, a `stream` event is triggered.
-      
+
       ## NodeJS example
-      
+
       ```javascript
         var io = require('socket.io-client');
-      
+
         var socket = io.connect('https://www.paymium.com/user', {
             path: '/ws/socket.io'
         });
-      
+
         console.log('CONNECTING');
-      
+
         socket.on('connect', function() {
             console.log('CONNECTED');
             console.log('WAITING FOR DATA...');
         });
-      
+
         // Replace USER_CHANNEL_ID with the channel id of the user
         socket.emit('channel', 'USER_CHANNEL_ID');
-      
+
         socket.on('disconnect', function() {
             console.log('DISCONNECTED');
         });
-      
+
         socket.on('stream', function(userData) {
             console.log('GOT DATA:');
             console.log(userData);
         });
       ```
-      
+
       ## User data
-      
+
       The `stream` event will emit an object when new data is available. The object
       will have properties **only for the data that changed**.
-      
+
       ### userData.balance_eur
-      
+
       If the available EUR balance changed, `userData.balance_eur` will contain the
       new balance.
-      
+
       ```javascript
         {
             balance_eur: "410.04"
         }
       ```
-      
+
       ### userData.locked_eur
-      
+
       If the locked EUR balance changed, `userData.locked_eur` will contain the
       new balance.
-      
+
       ```javascript
         {
             locked_eur: "20.24"
         }
       ```
-      
+
       ### userData.balance_btc
-      
+
       If the available BTC balance changed, `userData.balance_btc` will contain the
       new balance.
-      
+
       ```javascript
         {
             balance_btc: "53.29811458"
         }
       ```
-      
+
       ### userData.locked_btc
-      
+
       If the locked BTC balance changed, `userData.locked_btc` will contain the
       new balance.
-      
+
       ```javascript
         {
             locked_btc: "0"
         }
       ```
-      
+
       ### userData.orders
-      
+
       If user orders have changed (created, filled, cancelled, etc...),
       `userData.orders` will be an array containing the modified orders. You can check
       the state of the orders to handle them properly.
-      
+
       Example:
-      
+
       ```javascript
         {
             orders: [
@@ -1469,6 +1532,3 @@ tags:
             ]
         }
       ```
-
-
-    
