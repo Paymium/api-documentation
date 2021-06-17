@@ -299,6 +299,84 @@ paths:
           source: "'use strict';\r\nconst ccxt = require ('ccxt');\r\n\r\n(async function () {\r\n  let paymium = new ccxt.paymium({\r\n    apiKey: 'YOUR_PUBLIC_API_KEY',\r\n    secret: 'YOUR_SECRET_PRIVATE_KEY',\r\n  })\r\n\r\n  console.log(paymium.id, await paymium.publicGetCountries())\r\n})();\r\n"
         - lang: Python
           source: "# coding=utf-8\r\n\r\nimport ccxt\r\n\r\npaymium = ccxt.paymium({\r\n  'apiKey': 'YOUR_PUBLIC_API_KEY',\r\n  'secret': 'YOUR_SECRET_PRIVATE_KEY',\r\n})\r\n\r\nprint(paymium.publicGetCountries())\r\n"
+  '/data/{currency}/ohlcv':
+    get:
+      summary: Get OHLCV
+      description: Read open high low close volume data
+      tags:
+        - Public data
+      security: []
+      parameters:
+        - in: path
+          name: currency
+          required: true
+          type: string
+          enum:
+            - eur
+        - in: query
+          required: false
+          name: startTime
+          type: integer
+          description: Number of seconds since the Unix Epoch of the oldest ohlcv to fetch.
+        - in: query
+          name: endTime
+          required: false
+          type: integer
+          description: Number of seconds since the Unix Epoch of the last ohlcv to fetch.
+        - in: query
+          name: interval
+          required: false
+          type: string
+          enum:
+            - 1m
+            - 3m
+            - 5m
+            - 15m
+            - 30m
+            - 1h
+            - 2h
+            - 4h
+            - 6h
+            - 8h
+            - 12h
+            - 1d
+            - 3d
+            - 1w
+            - 1M
+          description: Interval between each ohlcv compute. Iteration can not exceed 1000 (default 500)
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              type: array
+              items:
+                - type: timestamp
+                - type: string (open)
+                - type: string (high)
+                - type: string (low)
+                - type: string (close)
+                - type: string (volume)
+            example:
+              - - 1615816800000
+                - '47440.0'
+                - '50000.0'
+                - '42000.0'
+                - '43000.0'
+                - '0.05321696'
+        '400':
+          description: ''
+          schema:
+            type: object
+            properties:
+              errors:
+                type: string
+                description: The error description
+                enum:
+                  - Interval / StartTime / EndTime does not match
+                  - Limit has not correct range
+                example: Interval / StartTime / EndTime does not match
   '/data/{currency}/ticker':
     get:
       summary: Get latest ticker data
@@ -1218,7 +1296,7 @@ info:
         "Operations account operations amount is greater than your available balance (1781.96 EUR)"
         "Amount can't be greater than your limit (1781.96 EUR)"
         ]
-      } 
+      }
     ```
     ## Successful calls
     If the API call was successful, the platform will answer with:
@@ -1229,7 +1307,7 @@ info:
 
     **Example response with rate-limit headers**
 
-        HTTP/1.1 200  
+        HTTP/1.1 200
         Content-Type: application/json; charset=utf-8
         X-Ratelimit-Limit: 5000
         X-Ratelimit-Remaining: 4982
@@ -1313,16 +1391,16 @@ tags:
         });
 
         console.log('CONNECTING');
-        
+
         socket.on('connect', function() {
         console.log('CONNECTED');
         console.log('WAITING FOR DATA...');
         });
-        
+
         socket.on('disconnect', function() {
         console.log('DISCONNECTED');
         });
-        
+
         socket.on('stream', function(publicData) {
         console.log('GOT DATA:');
         console.log(publicData);
