@@ -1258,7 +1258,7 @@ tags:
       ```javascript
         var io = require('socket.io-client');
 
-        var socket = io.connect('https://www.paymium.com/public', {
+        var socket = io.connect('https://paymium.com/public', {
         path: '/ws/socket.io'
         });
 
@@ -1295,7 +1295,7 @@ tags:
       ```javascript
         var io = require('socket.io-client');
 
-        var socket = io.connect('https://www.paymium.com/public', {
+        var socket = io.connect('https://paymium.com/public', {
         path: '/ws/socket.io'
         });
 
@@ -1414,7 +1414,7 @@ tags:
 
       ## Subscribing
 
-      You must connect your socket.io client to `https://www.paymium.com/user`, setting the path
+      You must connect your socket.io client to `https://paymium.com/user`, setting the path
       option to `/ws/socket.io`.
 
       You must emit a `channel` event with the user channel id. This channel id is
@@ -1427,7 +1427,7 @@ tags:
       ```javascript
         var io = require('socket.io-client');
 
-        var socket = io.connect('https://www.paymium.com/user', {
+        var socket = io.connect('https://paymium.com/user', {
             path: '/ws/socket.io'
         });
 
