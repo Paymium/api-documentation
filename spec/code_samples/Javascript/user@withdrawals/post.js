@@ -7,5 +7,5 @@ const ccxt = require ('ccxt');
     secret: 'YOUR_SECRET_PRIVATE_KEY',
   })
 
-  console.log(paymium.id, await paymium.privatePostUserWithdrawals({ "currency": "BTC", "amount": "1.0", "address": "1HdjGr6WCTcnmW1tNNsHX7fh4Jr5C2PeKe" }))
+  console.log(paymium.id, await paymium.privatePostUserWithdrawals({ "currency": "BTC", "amount": "1.0", "withdrawal_address": "1HdjGr6WCTcnmW1tNNsHX7fh4Jr5C2PeKe" }))
 })();

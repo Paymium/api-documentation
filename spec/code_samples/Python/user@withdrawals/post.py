@@ -7,4 +7,4 @@ paymium = ccxt.paymium({
   'secret': 'YOUR_SECRET_PRIVATE_KEY',
 })
 
-print(paymium.privatePostUserWithdrawals({ "currency": "BTC", "amount": "1.0", "address": "1HdjLr5WCThbmW1tNNsFX7fh4Jr5C3PeKe" }))
+print(paymium.privatePostUserWithdrawals({ "currency": "BTC", "amount": "1.0", "withdrawl_address": "1HdjLr5WCThbmW1tNNsFX7fh4Jr5C3PeKe" }))
