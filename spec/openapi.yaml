@@ -755,7 +755,7 @@ paths:
           description: order not found
     delete:
       summary: Cancel order
-      description: Only active trade orders and email transfers may be canceled 
+      description: Only active trade orders and email transfers may be canceled
       tags:
         - Order
       security:
