@@ -242,15 +242,6 @@ paths:
             items:
               type: object
               properties:
-                id:
-                  type: integer
-                  description: Country ID in Paymium
-                accepted:
-                  type: boolean
-                  description: We currently serve the residents of countries when the flag is set to true
-                card_partner_accepted:
-                  type: boolean
-                  description: Describes whether our card partner is accepted for this country or not
                 iso_alpha2:
                   type: string
                   description: ISO 3166-1 alpha-2 country code
@@ -259,17 +250,19 @@ paths:
                   type: string
                   description: ISO 3166-1 alpha-3 country code
                   example: "FRA"
-                iso_numeric:
-                  type: integer
-                  description: ISO 3166-1 numeric country code
-                  example: 250
-                name_en:
-                  type: string
-                  description: English name,
-                  example: "France"
+                accepted:
+                  type: boolean
+                  description: We currently serve the residents of countries when the flag is set to true
+                card_partner_accepted:
+                  type: boolean
+                  description: Describes whether our card partner is accepted for this country or not
                 name_fr:
                   type: string
                   description: French name
+                  example: "France"
+                name_en:
+                  type: string
+                  description: English name,
                   example: "France"
                 name_es:
                   type: string
@@ -301,21 +294,21 @@ paths:
           type: string
           enum: [eur]
         - in: query
-          required: false
-          name: startTime
-          type: integer
-          description: Number of seconds since the Unix Epoch of the oldest ohlcv to fetch.
-        - in: query
-          name: endTime
-          required: false
-          type: integer
-          description: Number of seconds since the Unix Epoch of the last ohlcv to fetch.
-        - in: query
           name: interval
           required: false
           type: string
           enum: ['1m','3m','5m','15m','30m','1h','2h','4h','6h','8h','12h','1d','3d','1w','1M']
           description: Interval between each ohlcv compute. Iteration can not exceed 1000 (default 500)
+        - in: query
+          required: false
+          name: startTime
+          type: integer
+          description: Number of seconds since the Unix Epoch of the oldest ohlcv to fetch. Can be filled if endTime is filled too.
+        - in: query
+          name: endTime
+          required: false
+          type: integer
+          description: Number of seconds since the Unix Epoch of the last ohlcv to fetch. Can be filled if startTime is filled too.
       responses:
         400:
           description: ""
@@ -503,13 +496,36 @@ paths:
             type: object
             properties:
               bids:
-                type: array
-                items:
-                  $ref: '#/definitions/TradeOrder'
+                type: object 
+                properties : 
+                  timestamp :
+                    type: string
+                    example: '1667561311'
+                  amount:
+                    type: string
+                    example: '10484.15571436'
+                  price:
+                    type: string
+                    example: '35500.0'
+                  currency:
+                    type: string
+                    example: 'EUR'
               asks:
-                type: array
-                items:
-                  $ref: '#/definitions/TradeOrder'
+                type: object 
+                properties : 
+                  timestamp :
+                    type: string
+                    example: '1667561311'
+                  amount:
+                    type: string
+                    example: '10484.15571436'
+                  price:
+                    type: string
+                    example: '35500.0'
+                  currency:
+                    type: string
+                    example: 'EUR'
+
   /user:
     get:
       summary: Get user info
@@ -544,6 +560,14 @@ paths:
               meta_state:
                 type: string
                 description: kyc user status
+              balance_eur:
+                type: string
+                description: available EUR balance
+                example: "1893.96"
+              locked_eur:
+                 type: string
+                 description: EUR balance locked in trading
+                 example: "300.00743886"
               balance_btc:
                 type: string
                 description: available BTC balance
@@ -560,14 +584,63 @@ paths:
                 type: string
                 description: LBTC balance locked in trading
                 example: "0.5"
-              balance_eur:
+              balance_bch:
                 type: string
-                description: available EUR balance
-                example: "1893.96"
-              locked_eur:
-                 type: string
-                 description: EUR balance locked in trading
-                 example: "300.00743886"
+                description: available BCH balance
+                example: "0.0"
+              locked_bch:
+                type: string
+                description: BCH balance locked in trading
+                example: "0.0"
+              balance_eth:
+                type: string
+                description: available ETH balance
+                example: "0.0"
+              locked_eth:
+                type: string
+                description: ETH balance locked in trading
+                example: "0.0"
+              balance_ltc:
+                type: string
+                description: available LTC balance
+                example: "0.0"
+              locked_ltc:
+                type: string
+                description: LTC balance locked in trading
+                example: "0.0"
+              balance_bcio: 
+                type: string
+                description: available BCIO balance
+                example: "0.0"
+              locked_bcio: 
+                type: string
+                description: BCIO balance locked in trading
+                example: "0.0"
+              balance_bat: 
+                type: string
+                description: available BAT balance
+                example: "0.0"
+              locked_bat: 
+                type: string
+                description: BAT balance locked in trading
+                example: "0.0"
+              balance_dai: 
+                type: string
+                description: available DAI balance
+                example: "0.0"
+              locked_dai: 
+                type: string
+                description: DAI balance locked in trading
+                example: "0.0"
+              balance_etc: 
+                type: string
+                description: available ETC balance
+                example: "0.0"
+              locked_etc: 
+                type: string
+                description: ETC balance locked in trading
+                example: "0.0"
+
   /user/orders:
     get:
       summary: List orders
