@@ -560,6 +560,14 @@ paths:
               meta_state:
                 type: string
                 description: kyc user status
+              balance_eur:
+                type: string
+                description: available EUR balance
+                example: "1893.96"
+              locked_eur:
+                 type: string
+                 description: EUR balance locked in trading
+                 example: "300.00743886"
               balance_btc:
                 type: string
                 description: available BTC balance
@@ -576,14 +584,63 @@ paths:
                 type: string
                 description: LBTC balance locked in trading
                 example: "0.5"
-              balance_eur:
+              balance_bch:
                 type: string
-                description: available EUR balance
-                example: "1893.96"
-              locked_eur:
-                 type: string
-                 description: EUR balance locked in trading
-                 example: "300.00743886"
+                description: available BCH balance
+                example: "0.0"
+              locked_bch:
+                type: string
+                description: BCH balance locked in trading
+                example: "0.0"
+              balance_eth:
+                type: string
+                description: available ETH balance
+                example: "0.0"
+              locked_eth:
+                type: string
+                description: ETH balance locked in trading
+                example: "0.0"
+              balance_ltc:
+                type: string
+                description: available LTC balance
+                example: "0.0"
+              locked_ltc:
+                type: string
+                description: LTC balance locked in trading
+                example: "0.0"
+              balance_bcio: 
+                type: string
+                description: available BCIO balance
+                example: "0.0"
+              locked_bcio: 
+                type: string
+                description: BCIO balance locked in trading
+                example: "0.0"
+              balance_bat: 
+                type: string
+                description: available BAT balance
+                example: "0.0"
+              locked_bat: 
+                type: string
+                description: BAT balance locked in trading
+                example: "0.0"
+              balance_dai: 
+                type: string
+                description: available DAI balance
+                example: "0.0"
+              locked_dai: 
+                type: string
+                description: DAI balance locked in trading
+                example: "0.0"
+              balance_etc: 
+                type: string
+                description: available ETC balance
+                example: "0.0"
+              locked_etc: 
+                type: string
+                description: ETC balance locked in trading
+                example: "0.0"
+
   /user/orders:
     get:
       summary: List orders
