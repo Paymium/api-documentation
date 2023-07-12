@@ -496,13 +496,36 @@ paths:
             type: object
             properties:
               bids:
-                type: array
-                items:
-                  $ref: '#/definitions/TradeOrder'
+                type: object 
+                properties : 
+                  timestamp :
+                    type: string
+                    example: '1667561311'
+                  amount:
+                    type: string
+                    example: '10484.15571436'
+                  price:
+                    type: string
+                    example: '35500.0'
+                  currency:
+                    type: string
+                    example: 'EUR'
               asks:
-                type: array
-                items:
-                  $ref: '#/definitions/TradeOrder'
+                type: object 
+                properties : 
+                  timestamp :
+                    type: string
+                    example: '1667561311'
+                  amount:
+                    type: string
+                    example: '10484.15571436'
+                  price:
+                    type: string
+                    example: '35500.0'
+                  currency:
+                    type: string
+                    example: 'EUR'
+
   /user:
     get:
       summary: Get user info
