@@ -242,15 +242,6 @@ paths:
             items:
               type: object
               properties:
-                id:
-                  type: integer
-                  description: Country ID in Paymium
-                accepted:
-                  type: boolean
-                  description: We currently serve the residents of countries when the flag is set to true
-                card_partner_accepted:
-                  type: boolean
-                  description: Describes whether our card partner is accepted for this country or not
                 iso_alpha2:
                   type: string
                   description: ISO 3166-1 alpha-2 country code
@@ -259,17 +250,19 @@ paths:
                   type: string
                   description: ISO 3166-1 alpha-3 country code
                   example: "FRA"
-                iso_numeric:
-                  type: integer
-                  description: ISO 3166-1 numeric country code
-                  example: 250
-                name_en:
-                  type: string
-                  description: English name,
-                  example: "France"
+                accepted:
+                  type: boolean
+                  description: We currently serve the residents of countries when the flag is set to true
+                card_partner_accepted:
+                  type: boolean
+                  description: Describes whether our card partner is accepted for this country or not
                 name_fr:
                   type: string
                   description: French name
+                  example: "France"
+                name_en:
+                  type: string
+                  description: English name,
                   example: "France"
                 name_es:
                   type: string
