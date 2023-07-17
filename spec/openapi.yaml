@@ -899,7 +899,7 @@ paths:
         - in: query
           name: payment_split
           type: number
-          description: Percentage of the payment the merchant will get in currency expressed as a two-decimal places float between 0 and 1 (required). Warning, when one request bitcoin, payment split must be 0.
+          description: Percentage of the payment the merchant will get in currency expressed as a two-decimal places float between 0 and 1 (required)
         - in: query
           name: comment
           type: string
@@ -907,41 +907,6 @@ paths:
       responses:
         201:
           description: ""
-          schema:
-            type: array
-            items:
-              type: object
-              properties:
-                uuid:
-                  type: string
-                  example: '6cecd395-92bf-4da6-8f2c-0611940ea0bb'
-                label:
-                  type: string
-                  description: description of the reasons for the payment
-                  example: "For the restaurant"
-                currency:
-                  type: string
-                  example: 'BTC'
-                payment_split:
-                  type: string
-                  description: split proposed to the other person
-                  example: '0.0'
-                requires_customer_email:
-                  type: boolean
-                  example: False
-                requires_delivery_address:
-                  type: boolean
-                  example: False
-                amount:
-                  type: string
-                  description: amount of BTC asked
-                  example: '0.01'
-                created_at: 
-                  type: string
-                  example: '1688138855'
-                updated_at:
-                  type: string
-                  example: '1688138855'
   /user/addresses:
     post:
       summary: Create deposit address
