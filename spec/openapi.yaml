@@ -899,7 +899,7 @@ paths:
         - in: query
           name: payment_split
           type: number
-          description: Percentage of the payment the merchant will get in currency expressed as a two-decimal places float between 0 and 1 (required).
+          description: Percentage of the payment the merchant will get in currency expressed as a two-decimal places float between 0 and 1 (required)
         - in: query
           name: comment
           type: string
