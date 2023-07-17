@@ -1017,10 +1017,6 @@ paths:
                 type: integer
                 example: 1445610041
                 description: Date of last notification (Number of seconds since Unix Epoch)
-              created_at:
-                type: integer
-                example: 1687792269
-                description: Date of creation (Number of seconds since Unix Epoch)
     post:
       summary: Create price alert
       tags:
