@@ -154,14 +154,14 @@ definitions:
         type: integer
         description: Expiration timestamp (Number of seconds since Unix Epoch)
         example: 1620041926
+      label:
+        type: string 
+        description: A label for the wallet address
+        example: Savings
       currency:
         type: string
         enum: [BTC, EUR]
         example: BTC
-      label:
-        type: string
-        description: A label for the wallet address
-        example: Savings
   Payment:
     type: object
     properties:
