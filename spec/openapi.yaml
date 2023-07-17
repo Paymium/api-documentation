@@ -52,21 +52,17 @@ definitions:
         type: string
         description: unique id
         example: "968f4580-e26c-4ad8-8bcd-874d23d55296"
+      type:
+        type: string
+        description: order type
+        example: "Transfer"
+      currency:
+        type: string
+        description: currency
+        example: "BTC"
       currency_amount:
         type: string
         description: ""
-      state:
-        type: string
-        description: order state
-        example: "executed"
-      btc_fee:
-        type: string
-        description: btc fee collected
-        example: "0.0"
-      currency_fee:
-        type: string
-        description: currency fee collected
-        example: "0.0"
       created_at:
         type: string
         format: date-time
@@ -77,21 +73,25 @@ definitions:
         format: date-time
         description: date created
         example: "2013-10-24T10:34:37.000Z"
-      currency:
-        type: string
-        description: currency
-        example: "BTC"
-      comment:
-        type: string
-        description: optional comment
       amount:
         type: string
         description: currency amount
         example: "1.0"
-      type:
+      state:
         type: string
-        description: order type
-        example: "Transfer"
+        description: order state
+        example: "executed"
+      currency_fee:
+        type: string
+        description: currency fee collected
+        example: "0.0"
+      btc_fee:
+        type: string
+        description: btc fee collected
+        example: "0.0"
+      comment:
+        type: string
+        description: optional comment
       traded_btc:
         type: string
       traded_currency:
