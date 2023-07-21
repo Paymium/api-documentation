@@ -7,5 +7,5 @@ const ccxt = require ('ccxt');
     secret: 'YOUR_SECRET_PRIVATE_KEY',
   })
 
-  console.log(paymium.id, await paymium.privatePostUserAddresses({ currency: 'btc' }))
+  console.log(paymium.id, await paymium.privatePostUserAddresses({ currency: 'BTC' }))
 })();
