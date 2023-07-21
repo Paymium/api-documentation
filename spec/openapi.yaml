@@ -156,7 +156,7 @@ definitions:
         example: 1620041926
       currency:
         type: string
-        enum: [BTC, EUR]
+        enum: [BTC, EUR, LBTC, ETH]
         example: BTC
       label:
         type: string
@@ -945,7 +945,7 @@ paths:
   /user/addresses:
     post:
       summary: Create deposit address
-      description: Create a new Bitcoin deposit address unless another one is already active.
+      description: Create a new deposit address unless 5 other one are already active. Currencies available are btc, lbtc, eth, bch, ltc, bcio, bat, dai, etc
       tags:
         - User
       security:
@@ -954,6 +954,12 @@ paths:
           ApiNonce: []
         - OAuth2: [deposit]
       parameters:
+        - in: query
+          name: currency
+          required: false
+          type: string
+          description: The currency for which the deposit address will be created
+          x-example: "btc"
         - in: query
           name: label
           required: false
