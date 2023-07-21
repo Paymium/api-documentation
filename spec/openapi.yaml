@@ -156,7 +156,7 @@ definitions:
         example: 1620041926
       currency:
         type: string
-        enum: [BTC, EUR, LBTC, ETH]
+        enum: The list can be seen using Get Currencies  
         example: BTC
       label:
         type: string
