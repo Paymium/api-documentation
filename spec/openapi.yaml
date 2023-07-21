@@ -959,7 +959,7 @@ paths:
           required: false
           type: string
           description: The currency for which the deposit address will be created
-          x-example: "btc"
+          x-example: "BTC"
         - in: query
           name: label
           required: false
