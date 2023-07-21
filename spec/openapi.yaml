@@ -945,7 +945,7 @@ paths:
   /user/addresses:
     post:
       summary: Create deposit address
-      description: Create a new deposit address unless 5 other one are already active. Currencies available are the one which support a deposit.
+      description: Create a new deposit address unless 5 other one are already active. Currencies available are the ones which support a deposit.
       tags:
         - User
       security:
