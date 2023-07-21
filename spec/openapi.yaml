@@ -280,6 +280,91 @@ paths:
                   type: integer
                   description: Country dialing code
                   example: 33
+  /currencies:
+    get:
+      summary: Get currencies
+      description: Get list of currencies
+      tags:
+        - Public data
+      security: []
+      responses:
+        200:
+          description: An array of currencies
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                symbol:
+                  type: string
+                  description: symbol of the currency
+                  example: "ETH"
+                code:
+                  type: string
+                  description: code of the currency
+                  example: "ETH"
+                precision:
+                  type: string
+                  description: precision of 10^-8 on the currency amount
+                  example: "8"
+                name:
+                  type: boolean
+                  description: name of the currency
+                  example: "Ethereum"
+                type:
+                  type: string
+                  description: indicate if it is a crypto or a fiat currency
+                  example: "crypto"
+                deposit:
+                  type: boolean
+                  description: if true, a deposit is accepted on this currency
+                  example: false
+                withdraw:
+                  type: boolean
+                  description: if true, a withdraw is accepted via this currency
+                withdraw_limit_min:
+                  type: string
+                  example: null
+                withdraw_limit_max:
+                  type: string
+                  example: null
+                charge_plan_limit_min:
+                  type: string
+                  example: "0.00000001"
+                charge_plan_limit_max:
+                  type: string
+                  example: '100.0'
+                email_transfer:
+                  type: boolean
+                  description: if true, an email transfer is accepted via this currency
+                internal_transfer:
+                  type: boolean
+                  description: if true, an internal transfer is accepted via this currency
+                  example: false
+                payment_request: 
+                  type: boolean
+                  description: if true, a payment request is accepted via this currency
+                  example: false
+                display_balance:
+                  type: boolean
+                  description: if true, one can display the balance of this currency
+                trading:
+                  type: array
+                swap:
+                  type: array
+                pairs:
+                  type: object
+                  example: { 'LTC/EUR': [Object] }
+                recurring_buy_plan:
+                  type: array
+                uri_scheme:
+                  type: string
+                  example: "litecoin"
+                authorize_hd_walled_creation:
+                  type: boolean
+                  example: false
+
+
   /data/{currency}/ohlcv:
     get:
       summary: Get OHLCV
