@@ -945,7 +945,7 @@ paths:
   /user/addresses:
     post:
       summary: Create deposit address
-      description: Create a new deposit address unless 5 other one are already active. Currencies available are btc, lbtc, eth, bch, ltc, bcio, bat, dai, etc
+      description: Create a new deposit address unless 5 other one are already active. Currencies available are the one which support a deposit.
       tags:
         - User
       security:
