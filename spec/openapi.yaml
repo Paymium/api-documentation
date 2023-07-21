@@ -156,7 +156,7 @@ definitions:
         example: 1620041926
       label:
         type: string 
-        description: A label for the wallet address
+        description: A label for the address
         example: Savings
       currency:
         type: string
