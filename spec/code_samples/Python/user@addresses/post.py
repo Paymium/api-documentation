@@ -7,4 +7,4 @@ paymium = ccxt.paymium({
   'secret': 'YOUR_SECRET_PRIVATE_KEY',
 })
 
-print(paymium.privatePostUserAddresses())
+print(paymium.privatePostUserAddresses('BTC'))
