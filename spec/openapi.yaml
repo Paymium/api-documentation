@@ -1304,7 +1304,7 @@ security:
   - OAuth2: [basic]
 info:
   x-logo:
-    url: https://raw.githubusercontent.com/Paymium/api-documentation/master/web/images/logo.png
+    url: https://raw.githubusercontent.com/Paymium/api-documentation/master/web/images/logoBranding.Svg
     href: https://www.paymium.com/page/developers
   version: "1.1.0"
   title: "Paymium API"
