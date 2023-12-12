@@ -1,6 +1,6 @@
-swagger: "2.0"
-host: "paymium.com"
-basePath: "/api/v1"
+swagger: '2.0'
+host: 'paymium.com'
+basePath: '/api/v1'
 schemes:
   - https
 consumes:
@@ -18,14 +18,14 @@ definitions:
       amount:
         type: string
         description: amount at price
-        example: "0.89744"
+        example: '0.89744'
       price:
         type: string
-        example: "664"
+        example: '664'
       currency:
         type: string
         description: currency
-        example: "EUR"
+        example: 'EUR'
   MarketProtection:
     type: object
     properties:
@@ -51,54 +51,54 @@ definitions:
       uuid:
         type: string
         description: unique id
-        example: "968f4580-e26c-4ad8-8bcd-874d23d55296"
+        example: '968f4580-e26c-4ad8-8bcd-874d23d55296'
       currency_amount:
         type: string
-        description: ""
+        description: ''
       state:
         type: string
         description: order state
-        example: "executed"
+        example: 'executed'
       btc_fee:
         type: string
         description: btc fee collected
-        example: "0.0"
+        example: '0.0'
       currency_fee:
         type: string
         description: currency fee collected
-        example: "0.0"
+        example: '0.0'
       created_at:
         type: string
         format: date-time
         description: date created
-        example: "2013-10-24T10:34:37.000Z"
+        example: '2013-10-24T10:34:37.000Z'
       updated_at:
         type: string
         format: date-time
         description: date created
-        example: "2013-10-24T10:34:37.000Z"
+        example: '2013-10-24T10:34:37.000Z'
       currency:
         type: string
         description: currency
-        example: "BTC"
+        example: 'BTC'
       comment:
         type: string
         description: optional comment
       amount:
         type: string
         description: currency amount
-        example: "1.0"
+        example: '1.0'
       type:
         type: string
         description: order type
-        example: "Transfer"
+        example: 'Transfer'
       traded_btc:
         type: string
       traded_currency:
         type: string
       direction:
         type: string
-        example: "buy"
+        example: 'buy'
       price:
         type: string
       account_operations:
@@ -112,20 +112,20 @@ definitions:
       uuid:
         type: string
         description: unique id
-        example: "968f4580-e26c-4ad8-8bcd-874d23d55296"
+        example: '968f4580-e26c-4ad8-8bcd-874d23d55296'
       amount:
         type: string
         description: currency amount
-        example: "1.0"
+        example: '1.0'
       currency:
         type: string
         description: currency
-        example: "BTC"
+        example: 'BTC'
       created_at:
         type: string
         format: date-time
         description: date created
-        example: "2013-10-24T10:34:37.000Z"
+        example: '2013-10-24T10:34:37.000Z'
       created_at_int:
         type: integer
         description: Number of seconds since Unix Epoch of the trade
@@ -133,7 +133,7 @@ definitions:
       name:
         type: string
         description: operation name
-        example: "account_operation"
+        example: 'account_operation'
       address:
         type: string
         description: bitcoin address if any
@@ -155,12 +155,12 @@ definitions:
         description: Expiration timestamp (Number of seconds since Unix Epoch)
         example: 1620041926
       label:
-        type: string 
+        type: string
         description: A label for the address
         example: Savings
       currency:
         type: string
-        enum: The list can be seen using Get Currencies  
+        enum: The list can be seen using Get Currencies
         example: BTC
   Payment:
     type: object
@@ -245,11 +245,11 @@ paths:
                 iso_alpha2:
                   type: string
                   description: ISO 3166-1 alpha-2 country code
-                  example: "FR"
+                  example: 'FR'
                 iso_alpha3:
                   type: string
                   description: ISO 3166-1 alpha-3 country code
-                  example: "FRA"
+                  example: 'FRA'
                 accepted:
                   type: boolean
                   description: We currently serve the residents of countries when the flag is set to true
@@ -259,23 +259,23 @@ paths:
                 name_fr:
                   type: string
                   description: French name
-                  example: "France"
+                  example: 'France'
                 name_en:
                   type: string
                   description: English name,
-                  example: "France"
+                  example: 'France'
                 name_es:
                   type: string
                   description: Spanish name
-                  example: "Francia"
+                  example: 'Francia'
                 name_de:
                   type: string
                   description: Deutch name
-                  example: "Frankreich"
+                  example: 'Frankreich'
                 name_it:
                   type: string
                   description: Italian name
-                  example: "Francia"
+                  example: 'Francia'
                 telephone_code:
                   type: integer
                   description: Country dialing code
@@ -298,23 +298,23 @@ paths:
                 symbol:
                   type: string
                   description: symbol of the currency
-                  example: "ETH"
+                  example: 'ETH'
                 code:
                   type: string
                   description: code of the currency
-                  example: "ETH"
+                  example: 'ETH'
                 precision:
                   type: string
                   description: precision of 10^-8 on the currency amount
-                  example: "8"
+                  example: '8'
                 name:
                   type: boolean
                   description: name of the currency
-                  example: "Ethereum"
+                  example: 'Ethereum'
                 type:
                   type: string
                   description: indicate if it is a crypto or a fiat currency
-                  example: "crypto"
+                  example: 'crypto'
                 deposit:
                   type: boolean
                   description: if true, a deposit is accepted on this currency
@@ -330,7 +330,7 @@ paths:
                   example: null
                 charge_plan_limit_min:
                   type: string
-                  example: "0.00000001"
+                  example: '0.00000001'
                 charge_plan_limit_max:
                   type: string
                   example: '100.0'
@@ -341,7 +341,7 @@ paths:
                   type: boolean
                   description: if true, an internal transfer is accepted via this currency
                   example: false
-                payment_request: 
+                payment_request:
                   type: boolean
                   description: if true, a payment request is accepted via this currency
                   example: false
@@ -359,11 +359,10 @@ paths:
                   type: array
                 uri_scheme:
                   type: string
-                  example: "litecoin"
+                  example: 'litecoin'
                 authorize_hd_walled_creation:
                   type: boolean
                   example: false
-
 
   /data/{currency}/ohlcv:
     get:
@@ -382,7 +381,7 @@ paths:
           name: interval
           required: false
           type: string
-          enum: ['1m','3m','5m','15m','30m','1h','2h','4h','6h','8h','12h','1d','3d','1w','1M']
+          enum: ['1m', '3m', '5m', '15m', '30m', '1h', '2h', '4h', '6h', '8h', '12h', '1d', '3d', '1w', '1M']
           description: Interval between each ohlcv compute. Iteration can not exceed 1000 (default 500)
         - in: query
           required: false
@@ -396,7 +395,7 @@ paths:
           description: Number of seconds since the Unix Epoch of the last ohlcv to fetch. Can be filled if startTime is filled too.
       responses:
         400:
-          description: ""
+          description: ''
           schema:
             type: object
             properties:
@@ -406,7 +405,7 @@ paths:
                 enum: ['Interval / StartTime / EndTime does not match', 'Limit has not correct range']
                 example: 'Interval / StartTime / EndTime does not match'
         200:
-          description: ""
+          description: ''
           schema:
             type: array
             items:
@@ -418,15 +417,7 @@ paths:
                 - type: string (low)
                 - type: string (close)
                 - type: string (volume)
-            example: [[
-              1615816800000,
-              "47440.0",
-              "50000.0",
-              "42000.0",
-              "43000.0",
-              "0.05321696"
-              ]]
-
+            example: [[1615816800000, '47440.0', '50000.0', '42000.0', '43000.0', '0.05321696']]
 
   /data/{currency}/ticker:
     get:
@@ -443,38 +434,38 @@ paths:
           enum: [eur, btc]
       responses:
         200:
-          description: ""
+          description: ''
           schema:
             type: object
             properties:
               high:
                 type: string
                 description: 24h high price
-                example: "45998.99"
+                example: '45998.99'
               low:
                 type: string
                 description: 24h low price
-                example: "37210.0"
+                example: '37210.0'
               volume:
                 type: string
                 description: 24h volume
-                example: "39.77651173"
+                example: '39.77651173'
               bid:
                 type: string
                 description: bid price
-                example: "40600.0"
+                example: '40600.0'
               ask:
                 type: string
                 description: ask price
-                example: "40783.75"
+                example: '40783.75'
               midpoint:
                 type: string
                 description: midpoint price
-                example: "40691.875"
+                example: '40691.875'
               vwap:
                 type: string
                 description: Volume-Weighted Average Price
-                example: "40509.86537845"
+                example: '40509.86537845'
               at:
                 type: integer
                 description: timestamp
@@ -482,23 +473,23 @@ paths:
               price:
                 type: string
                 description: price of latest trade
-                example: "40600.0"
+                example: '40600.0'
               open:
                 type: string
                 description: 24h open price
-                example: "45998.99"
+                example: '45998.99'
               variation:
                 type: string
                 description: 24h variation (percentage)
-                example: "-11.7372"
+                example: '-11.7372'
               currency:
                 type: string
                 description: ISO 4217 currency code
-                example: "EUR"
+                example: 'EUR'
               trade_id:
                 type: string
                 description: ID of the latest trade on Paymium
-                example: "0a31a001-2deb-48f1-b413-f1a31a9f97c1"
+                example: '0a31a001-2deb-48f1-b413-f1a31a9f97c1'
               size:
                 type: string
                 description: Amount in BTC of the latest trade on Paymium
@@ -531,32 +522,32 @@ paths:
                 uuid:
                   type: string
                   description: unique ID of trade
-                  example: "59f9c458-cb22-48d6-9103-0b6e54130e29"
+                  example: '59f9c458-cb22-48d6-9103-0b6e54130e29'
                 traded_btc:
                   type: string
                   description: amount of BTC traded
-                  example: "0.153"
+                  example: '0.153'
                 traded_currency:
                   type: string
                   description: amount of currency traded
-                  example: "102.51"
+                  example: '102.51'
                 created_at:
                   type: string
                   format: date-time
                   description: date created
-                  example: "2014-01-07T11:30:59Z"
+                  example: '2014-01-07T11:30:59Z'
                 currency:
                   type: string
                   description: currency
-                  example: "EUR"
+                  example: 'EUR'
                 side:
                   type: string
                   description: order type ("buy" or "sell")
-                  example: "buy"
+                  example: 'buy'
                 price:
                   type: string
                   description: price per BTC
-                  example: "670.0"
+                  example: '670.0'
                 created_at_int:
                   type: integer
                   description: Number of seconds since Unix Epoch of the trade
@@ -564,7 +555,7 @@ paths:
   /data/{currency}/depth:
     get:
       summary: Get market depth
-      description:  Read the market dept, bids and asks are grouped by price.
+      description: Read the market dept, bids and asks are grouped by price.
       tags:
         - Public data
       security: []
@@ -576,14 +567,14 @@ paths:
           enum: [eur, btc]
       responses:
         200:
-          description: ""
+          description: ''
           schema:
             type: object
             properties:
               bids:
-                type: object 
-                properties : 
-                  timestamp :
+                type: object
+                properties:
+                  timestamp:
                     type: string
                     example: '1667561311'
                   amount:
@@ -596,9 +587,9 @@ paths:
                     type: string
                     example: 'EUR'
               asks:
-                type: object 
-                properties : 
-                  timestamp :
+                type: object
+                properties:
+                  timestamp:
                     type: string
                     example: '1667561311'
                   amount:
@@ -624,7 +615,7 @@ paths:
         - OAuth2: [basic]
       responses:
         200:
-          description: ""
+          description: ''
           schema:
             type: object
             properties:
@@ -648,83 +639,83 @@ paths:
               balance_eur:
                 type: string
                 description: available EUR balance
-                example: "1893.96"
+                example: '1893.96'
               locked_eur:
-                 type: string
-                 description: EUR balance locked in trading
-                 example: "300.00743886"
+                type: string
+                description: EUR balance locked in trading
+                example: '300.00743886'
               balance_btc:
                 type: string
                 description: available BTC balance
-                example: "25.78866278"
+                example: '25.78866278'
               locked_btc:
                 type: string
                 description: BTC balance locked in trading
-                example: "1.0"
+                example: '1.0'
               balance_lbtc:
                 type: string
                 description: available LBTC balance
-                example: "0.8"
+                example: '0.8'
               locked_lbtc:
                 type: string
                 description: LBTC balance locked in trading
-                example: "0.5"
+                example: '0.5'
               balance_bch:
                 type: string
                 description: available BCH balance
-                example: "0.0"
+                example: '0.0'
               locked_bch:
                 type: string
                 description: BCH balance locked in trading
-                example: "0.0"
+                example: '0.0'
               balance_eth:
                 type: string
                 description: available ETH balance
-                example: "0.0"
+                example: '0.0'
               locked_eth:
                 type: string
                 description: ETH balance locked in trading
-                example: "0.0"
+                example: '0.0'
               balance_ltc:
                 type: string
                 description: available LTC balance
-                example: "0.0"
+                example: '0.0'
               locked_ltc:
                 type: string
                 description: LTC balance locked in trading
-                example: "0.0"
-              balance_bcio: 
+                example: '0.0'
+              balance_bcio:
                 type: string
                 description: available BCIO balance
-                example: "0.0"
-              locked_bcio: 
+                example: '0.0'
+              locked_bcio:
                 type: string
                 description: BCIO balance locked in trading
-                example: "0.0"
-              balance_bat: 
+                example: '0.0'
+              balance_bat:
                 type: string
                 description: available BAT balance
-                example: "0.0"
-              locked_bat: 
+                example: '0.0'
+              locked_bat:
                 type: string
                 description: BAT balance locked in trading
-                example: "0.0"
-              balance_dai: 
+                example: '0.0'
+              balance_dai:
                 type: string
                 description: available DAI balance
-                example: "0.0"
-              locked_dai: 
+                example: '0.0'
+              locked_dai:
                 type: string
                 description: DAI balance locked in trading
-                example: "0.0"
-              balance_etc: 
+                example: '0.0'
+              balance_etc:
                 type: string
                 description: available ETC balance
-                example: "0.0"
-              locked_etc: 
+                example: '0.0'
+              locked_etc:
                 type: string
                 description: ETC balance locked in trading
-                example: "0.0"
+                example: '0.0'
 
   /user/orders:
     get:
@@ -759,7 +750,7 @@ paths:
           description: only show active orders
       responses:
         200:
-          description: ""
+          description: ''
           schema:
             type: array
             items:
@@ -806,11 +797,11 @@ paths:
           description: Currency amount to trade. Either one of amount or currency_amount must be specified. When the amount is specified, the engine will buy or sell this amount of Bitcoins. When the currency_amount is specified, the engine will buy as much Bitcoins as possible for currency_amount or sell as much Bitcoins as necessary to obtain currency_amount.
       responses:
         201:
-          description: ""
+          description: ''
           schema:
             $ref: '#/definitions/Order'
         422:
-          description: "ONLY on `MarketOrder` type, this error can occured when market order `amount` or `currency_amount` (buy or sell) is too large against current market liquidity"
+          description: 'ONLY on `MarketOrder` type, this error can occured when market order `amount` or `currency_amount` (buy or sell) is too large against current market liquidity'
           schema:
             $ref: '#/definitions/MarketProtection'
 
@@ -833,7 +824,7 @@ paths:
           x-example: d64e6450-bf17-44a7-9bc1-bb830610293a
       responses:
         200:
-          description: ""
+          description: ''
           schema:
             $ref: '#/definitions/Order'
         404:
@@ -858,11 +849,11 @@ paths:
           x-example: d64e6450-bf17-44a7-9bc1-bb830610293a
       responses:
         204:
-          description: ""
+          description: ''
         404:
-          description: "order not found"
+          description: 'order not found'
         500:
-          description: "unable to cancel this order"
+          description: 'unable to cancel this order'
 
   /user/orders/{uuid}/cancel:
     delete:
@@ -903,7 +894,7 @@ paths:
           name: currency
           required: true
           type: string
-          enum: [BTC,EUR]
+          enum: [BTC, EUR]
           x-example: EUR
         - in: query
           name: amount
@@ -917,7 +908,7 @@ paths:
           description: BTC address if withdrawing BTC
       responses:
         201:
-          description: ""
+          description: ''
           schema:
             $ref: '#/definitions/Order'
         403:
@@ -952,7 +943,7 @@ paths:
           description: a small note explaining the transfer
       responses:
         201:
-          description: ""
+          description: ''
           schema:
             $ref: '#/definitions/Order'
         403:
@@ -991,7 +982,7 @@ paths:
           description: a small note explaining the transfer
       responses:
         201:
-          description: ""
+          description: ''
           schema:
             type: array
             items:
@@ -1003,7 +994,7 @@ paths:
                 label:
                   type: string
                   description: description of the reasons for the payment
-                  example: "For the restaurant"
+                  example: 'For the restaurant'
                 currency:
                   type: string
                   example: 'BTC'
@@ -1021,7 +1012,7 @@ paths:
                   type: string
                   description: amount of BTC asked
                   example: '0.01'
-                created_at: 
+                created_at:
                   type: string
                   example: '1688138855'
                 updated_at:
@@ -1044,16 +1035,16 @@ paths:
           required: false
           type: string
           description: The currency for which the deposit address will be created
-          x-example: "BTC"
+          x-example: 'BTC'
         - in: query
           name: label
           required: false
           type: string
           description: A label for the wallet address
-          x-example: "Savings"
+          x-example: 'Savings'
       responses:
         201:
-          description: ""
+          description: ''
           schema:
             $ref: '#/definitions/Address'
         422:
@@ -1072,14 +1063,13 @@ paths:
         - OAuth2: [deposit]
       responses:
         200:
-          description: ""
+          description: ''
           schema:
             type: array
             items:
               $ref: '#/definitions/Address'
         403:
           description: User must be approved.
-
 
   /user/addresses/{address}:
     get:
@@ -1100,7 +1090,7 @@ paths:
           x-example: 1FPDBXNqSkZMsw1kSkkajcj8berxDQkUoc
       responses:
         200:
-          description: ""
+          description: ''
           schema:
             $ref: '#/definitions/Address'
         404:
@@ -1121,7 +1111,7 @@ paths:
         - OAuth2: [activity]
       responses:
         200:
-          description: ""
+          description: ''
           schema:
             type: object
             properties:
@@ -1130,7 +1120,7 @@ paths:
                 example: 42
               token:
                 type: string
-                example: "0ff2f39d-cd9f-4710-9eb5-3f8385f5e059"
+                example: '0ff2f39d-cd9f-4710-9eb5-3f8385f5e059'
               notify_above:
                 type: number
                 example: 220.5
@@ -1168,7 +1158,7 @@ paths:
           type: number
       responses:
         201:
-          description: ""
+          description: ''
   /user/price_alerts/{id}:
     delete:
       summary: Delete price alert
@@ -1187,11 +1177,11 @@ paths:
           x-example: 1
       responses:
         200:
-          description: ""
+          description: ''
   /merchant/create_payment:
     post:
       summary: Create merchant payment
-      description: ""
+      description: ''
       tags:
         - Merchant
       security:
@@ -1216,12 +1206,12 @@ paths:
           name: currency
           required: true
           type: string
-          enum: [BTC,EUR]
+          enum: [BTC, EUR]
         - in: query
           name: callback_url
           type: string
           description: Merchant callback URL, it is called when the state of the payment changes
-          x-example: "http://myonlineshop/payments/order-987978/callback"
+          x-example: 'http://myonlineshop/payments/order-987978/callback'
         - in: query
           name: redirect_url
           type: string
@@ -1239,9 +1229,9 @@ paths:
           x-example: order-987978
       responses:
         201:
-          description: ""
+          description: ''
           schema:
-            $ref: "#/definitions/Payment"
+            $ref: '#/definitions/Payment'
   /merchant/get_payment/{uuid}:
     get:
       summary: Get merchant payment
@@ -1261,11 +1251,9 @@ paths:
           x-example: 458f4580-e26c-4ad8-8bcd-874d23d55296
       responses:
         200:
-          description: ""
+          description: ''
           schema:
-            $ref: "#/definitions/Payment"
-
-
+            $ref: '#/definitions/Payment'
 
 securityDefinitions:
   ApiKey:
@@ -1304,13 +1292,13 @@ security:
   - OAuth2: [basic]
 info:
   x-logo:
-    url: https://raw.githubusercontent.com/Paymium/api-documentation/master/web/images/logoBranding.Svg
+    url: https://raw.githubusercontent.com/Paymium/api-documentation/master/web/images/logoBranding.svg
     href: https://www.paymium.com/page/developers
-  version: "1.1.0"
-  title: "Paymium API"
-  termsOfService: "https://www.paymium.com/page/tos"
+  version: '1.1.0'
+  title: 'Paymium API'
+  termsOfService: 'https://www.paymium.com/page/tos'
   contact:
-      email: "support@paymium.com"
+    email: 'support@paymium.com'
   description: >
     The Paymium API allows developers to extend the capabilities of the Paymium platform, from reading the latest ticker to automating trades with bots.
 
@@ -1395,7 +1383,6 @@ info:
 
 
     Installation instructions can be found on [GitHub](https://github.com/ccxt/ccxt).
-
 
 tags:
   - name: Public data
