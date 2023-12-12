@@ -2177,7 +2177,7 @@
   ],
   "info": {
     "x-logo": {
-      "url": "https://raw.githubusercontent.com/Paymium/api-documentation/master/web/images/logo.png",
+      "url": "https://raw.githubusercontent.com/Paymium/api-documentation/master/web/images/logoBranding.svg",
       "href": "https://www.paymium.com/page/developers"
     },
     "version": "1.1.0",
