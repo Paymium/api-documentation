@@ -159,7 +159,7 @@ definitions:
         example: Savings
       currency:
         type: string
-        enum: The list can be seen using Get Currencies
+        description: The list can be seen using Get Currencies
         example: BTC
   Payment:
     type: object
@@ -287,9 +287,30 @@ paths:
                   example: 33
       x-code-samples:
         - lang: Javascript
-          source: "'use strict';\r\nconst ccxt = require ('ccxt');\r\n\r\n(async function () {\r\n  let paymium = new ccxt.paymium({\r\n    apiKey: 'YOUR_PUBLIC_API_KEY',\r\n    secret: 'YOUR_SECRET_PRIVATE_KEY',\r\n  })\r\n\r\n  console.log(paymium.id, await paymium.publicGetCountries())\r\n})();\r\n"
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_SECRET_PRIVATE_KEY',
+              })
+
+              console.log(paymium.id, await paymium.publicGetCountries())
+            })();
         - lang: Python
-          source: "# coding=utf-8\r\n\r\nimport ccxt\r\n\r\npaymium = ccxt.paymium({\r\n  'apiKey': 'YOUR_PUBLIC_API_KEY',\r\n  'secret': 'YOUR_SECRET_PRIVATE_KEY',\r\n})\r\n\r\nprint(paymium.publicGetCountries())\r\n"
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.publicGetCountries())
   /currencies:
     get:
       summary: Get currencies
@@ -377,9 +398,30 @@ paths:
                   example: false
       x-code-samples:
         - lang: Javascript
-          source: "'use strict';\r\nconst ccxt = require ('ccxt');\r\n\r\n(async function () {\r\n  let paymium = new ccxt.paymium({\r\n    apiKey: 'YOUR_PUBLIC_API_KEY',\r\n    secret: 'YOUR_PRIVATE_API_KEY',\r\n  })\r\n\r\n  console.log(paymium.id, await paymium.publicGetCurrencies())\r\n})();\r\n"
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_PRIVATE_API_KEY',
+              })
+
+              console.log(paymium.id, await paymium.publicGetCurrencies())
+            })();
         - lang: Python
-          source: "# coding=utf-8\r\n\r\nimport ccxt\r\n\r\npaymium = ccxt.paymium({\r\n  'apiKey': 'YOUR_PUBLIC_API_KEY',\r\n  'secret': 'YOUR_SECRET_PRIVATE_KEY',\r\n})\r\n\r\nprint(paymium.publicGetCurrencies())\r\n"
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.publicGetCurrencies())
   '/data/{currency}/ohlcv':
     get:
       summary: Get OHLCV
@@ -460,9 +502,30 @@ paths:
                 example: Interval / StartTime / EndTime does not match
       x-code-samples:
         - lang: Javascript
-          source: "'use strict';\r\nconst ccxt = require ('ccxt');\r\n\r\n(async function () {\r\nlet paymium = new ccxt.paymium({\r\napiKey: 'YOUR_PUBLIC_API_KEY',\r\nsecret: 'YOUR_SECRET_PRIVATE_KEY',\r\n})\r\n\r\nconsole.log(paymium.id, await paymium.fetchOHLCV(\"eur\",\"1m\",undefined,undefined))\r\n})();"
+          source: |-
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+            let paymium = new ccxt.paymium({
+            apiKey: 'YOUR_PUBLIC_API_KEY',
+            secret: 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            console.log(paymium.id, await paymium.fetchOHLCV("eur","1m",undefined,undefined))
+            })();
         - lang: Python
-          source: "# coding=utf-8\r\n\r\nimport ccxt\r\n\r\npaymium = ccxt.paymium({\r\n'apiKey': 'YOUR_PUBLIC_API_KEY',\r\n'secret': 'YOUR_SECRET_PRIVATE_KEY',\r\n})\r\n\r\nprint(paymium.fetch_ohlcv ('eur', '1m', None, None))"
+          source: |-
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+            'apiKey': 'YOUR_PUBLIC_API_KEY',
+            'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.fetch_ohlcv ('eur', '1m', None, None))
   '/data/{currency}/ticker':
     get:
       summary: Get latest ticker data
@@ -542,9 +605,30 @@ paths:
                 example: '0.0052'
       x-code-samples:
         - lang: Javascript
-          source: "'use strict';\r\nconst ccxt = require('ccxt');\r\n\r\n(async function () {\r\n  let paymium = new ccxt.paymium({\r\n    apiKey: 'YOUR_PUBLIC_API_KEY',\r\n    secret: 'YOUR_PRIVATE_API_KEY',\r\n  })\r\n\r\n  console.log(paymium.id, await paymium.publicGetDataCurrencyTicker({ \"currency\": \"eur\" }))\r\n})();\r\n"
+          source: |
+            'use strict';
+            const ccxt = require('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_PRIVATE_API_KEY',
+              })
+
+              console.log(paymium.id, await paymium.publicGetDataCurrencyTicker({ "currency": "eur" }))
+            })();
         - lang: Python
-          source: "# coding=utf-8\r\n\r\nimport ccxt\r\n\r\npaymium = ccxt.paymium({\r\n  'apiKey': 'YOUR_PUBLIC_API_KEY',\r\n  'secret': 'YOUR_SECRET_PRIVATE_KEY',\r\n})\r\n\r\nprint(paymium.publicGetDataCurrencyTicker({\"currency\": 'eur'}))\r\n"
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.publicGetDataCurrencyTicker({"currency": 'eur'}))
   '/data/{currency}/trades':
     get:
       summary: List latest trades
@@ -607,9 +691,30 @@ paths:
                   example: 1389094259
       x-code-samples:
         - lang: Javascript
-          source: "'use strict';\r\nconst ccxt = require('ccxt');\r\n\r\n(async function () {\r\n  let paymium = new ccxt.paymium({\r\n    apiKey: 'YOUR_PUBLIC_API_KEY',\r\n    secret: 'YOUR_PRIVATE_API_KEY',\r\n  })\r\n\r\n  console.log(paymium.id, await paymium.publicGetDataCurrencyTrades({ \"currency\": \"eur\" }))\r\n})();\r\n"
+          source: |
+            'use strict';
+            const ccxt = require('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_PRIVATE_API_KEY',
+              })
+
+              console.log(paymium.id, await paymium.publicGetDataCurrencyTrades({ "currency": "eur" }))
+            })();
         - lang: Python
-          source: "# coding=utf-8\r\n\r\nimport ccxt\r\n\r\npaymium = ccxt.paymium({\r\n  'apiKey': 'YOUR_PUBLIC_API_KEY',\r\n  'secret': 'YOUR_SECRET_PRIVATE_KEY',\r\n})\r\n\r\nprint(paymium.publicGetDataCurrencyTrades({\"currency\": 'eur'}))\r\n"
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.publicGetDataCurrencyTrades({"currency": 'eur'}))
   '/data/{currency}/depth':
     get:
       summary: Get market depth
@@ -663,9 +768,30 @@ paths:
                     example: EUR
       x-code-samples:
         - lang: Javascript
-          source: "'use strict';\r\nconst ccxt = require('ccxt');\r\n\r\n(async function () {\r\n  let paymium = new ccxt.paymium({\r\n    apiKey: 'YOUR_PUBLIC_API_KEY',\r\n    secret: 'YOUR_PRIVATE_API_KEY',\r\n  })\r\n\r\n  console.log(paymium.id, await paymium.publicGetDataCurrencyDepth({ \"currency\": \"eur\" }))\r\n})();\r\n"
+          source: |
+            'use strict';
+            const ccxt = require('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_PRIVATE_API_KEY',
+              })
+
+              console.log(paymium.id, await paymium.publicGetDataCurrencyDepth({ "currency": "eur" }))
+            })();
         - lang: Python
-          source: "# coding=utf-8\r\n\r\nimport ccxt\r\n\r\npaymium = ccxt.paymium({\r\n  'apiKey': 'YOUR_PUBLIC_API_KEY',\r\n  'secret': 'YOUR_SECRET_PRIVATE_KEY',\r\n})\r\n\r\nprint(paymium.publicGetDataCurrencyDepth({\"currency\": 'eur'}))\r\n"
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.publicGetDataCurrencyDepth({"currency": 'eur'}))
   /user:
     get:
       summary: Get user info
@@ -783,9 +909,30 @@ paths:
                 example: '0.0'
       x-code-samples:
         - lang: Javascript
-          source: "'use strict';\r\nconst ccxt = require ('ccxt');\r\n\r\n(async function () {\r\n  let paymium = new ccxt.paymium({\r\n    apiKey: 'YOUR_PUBLIC_API_KEY',\r\n    secret: 'YOUR_SECRET_PRIVATE_KEY',\r\n  })\r\n\r\n  console.log(paymium.id, await paymium.privateGetUser())\r\n})();\r\n"
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_SECRET_PRIVATE_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privateGetUser())
+            })();
         - lang: Python
-          source: "# coding=utf-8\r\n\r\nimport ccxt\r\n\r\npaymium = ccxt.paymium({\r\n  'apiKey': 'YOUR_PUBLIC_API_KEY',\r\n  'secret': 'YOUR_SECRET_PRIVATE_KEY',\r\n})\r\n\r\nprint(paymium.privateGetUser())\r\n"
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privateGetUser())
   /user/orders:
     get:
       summary: List orders
@@ -834,9 +981,30 @@ paths:
               $ref: '#/definitions/Order'
       x-code-samples:
         - lang: Javascript
-          source: "'use strict';\r\nconst ccxt = require ('ccxt');\r\n\r\n(async function () {\r\n  let paymium = new ccxt.paymium({\r\n    apiKey: 'YOUR_PUBLIC_API_KEY',\r\n    secret: 'YOUR_SECRET_PRIVATE_KEY',\r\n  })\r\n\r\n  console.log(paymium.id, await paymium.privateGetUserOrders())\r\n})();\r\n"
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_SECRET_PRIVATE_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privateGetUserOrders())
+            })();
         - lang: Python
-          source: "# coding=utf-8\r\n\r\nimport ccxt\r\n\r\npaymium = ccxt.paymium({\r\n  'apiKey': 'YOUR_PUBLIC_API_KEY',\r\n  'secret': 'YOUR_SECRET_PRIVATE_KEY',\r\n})\r\n\r\nprint(paymium.privateGetUserOrders())\r\n"
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privateGetUserOrders())
     post:
       summary: Create order
       tags:
@@ -893,9 +1061,30 @@ paths:
             $ref: '#/definitions/MarketProtection'
       x-code-samples:
         - lang: Javascript
-          source: "'use strict';\r\nconst ccxt = require ('ccxt');\r\n\r\n(async function () {\r\n  let paymium = new ccxt.paymium({\r\n    apiKey: 'YOUR_PUBLIC_API_KEY',\r\n    secret: 'YOUR_SECRET_PRIVATE_KEY',\r\n  })\r\n\r\n  console.log(paymium.id, await paymium.privatePostUserOrders({ \"type\": \"LimitOrder\", \"currency\": \"EUR\", \"direction\": \"buy\", \"price\": \"54000\", \"currency_amount\": \"100\" }))\r\n})();\r\n"
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_SECRET_PRIVATE_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privatePostUserOrders({ "type": "LimitOrder", "currency": "EUR", "direction": "buy", "price": "54000", "currency_amount": "100" }))
+            })();
         - lang: Python
-          source: "# coding=utf-8\r\n\r\nimport ccxt\r\n\r\npaymium = ccxt.paymium({\r\n  'apiKey': 'YOUR_PUBLIC_API_KEY',\r\n  'secret': 'YOUR_SECRET_PRIVATE_KEY',\r\n})\r\n\r\nprint(paymium.privatePostUserOrders({ \"type\": \"LimitOrder\", \"currency\": \"EUR\", \"direction\": \"buy\", \"price\": \"54000\", \"currency_amount\": \"100\" }))\r\n"
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privatePostUserOrders({ "type": "LimitOrder", "currency": "EUR", "direction": "buy", "price": "54000", "currency_amount": "100" }))
   '/user/orders/{uuid}':
     get:
       summary: Get order
@@ -923,9 +1112,30 @@ paths:
           description: order not found
       x-code-samples:
         - lang: Javascript
-          source: "'use strict';\r\nconst ccxt = require ('ccxt');\r\n\r\n(async function () {\r\n  let paymium = new ccxt.paymium({\r\n    apiKey: 'YOUR_PUBLIC_API_KEY',\r\n    secret: 'YOUR_SECRET_PRIVATE_KEY',\r\n  })\r\n\r\n  console.log(paymium.id, await paymium.privateGetUserOrdersUuid({ \"uuid\": \"20f8dd15-ae87-4617-a353-d0996be60010\" }))\r\n})();\r\n"
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_SECRET_PRIVATE_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privateGetUserOrdersUuid({ "uuid": "20f8dd15-ae87-4617-a353-d0996be60010" }))
+            })();
         - lang: Python
-          source: "# coding=utf-8\r\n\r\nimport ccxt\r\n\r\npaymium = ccxt.paymium({\r\n  'apiKey': 'YOUR_PUBLIC_API_KEY',\r\n  'secret': 'YOUR_SECRET_PRIVATE_KEY',\r\n})\r\n\r\nprint(paymium.privateGetUserOrdersUuid({ \"uuid\": \"20f8dd15-ae87-4617-a353-d0996be60010\" }))\r\n"
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privateGetUserOrdersUuid({ "uuid": "20f8dd15-ae87-4617-a353-d0996be60010" }))
     delete:
       summary: Cancel order
       description: Only active trade orders and email transfers may be canceled (an email notification will be sent)
@@ -954,9 +1164,30 @@ paths:
           description: unable to cancel this order
       x-code-samples:
         - lang: Javascript
-          source: "'use strict';\r\nconst ccxt = require ('ccxt');\r\n\r\n(async function () {\r\n  let paymium = new ccxt.paymium({\r\n    apiKey: 'YOUR_PUBLIC_API_KEY',\r\n    secret: 'YOUR_SECRET_PRIVATE_KEY',\r\n  })\r\n\r\n  console.log(paymium.id, await paymium.privateDeleteUserOrdersUuid({ \"uuid\": \"20f8dd15-ae87-4617-a353-d0996be60010\" }))\r\n})();\r\n"
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_SECRET_PRIVATE_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privateDeleteUserOrdersUuid({ "uuid": "20f8dd15-ae87-4617-a353-d0996be60010" }))
+            })();
         - lang: Python
-          source: "# coding=utf-8\r\n\r\nimport ccxt\r\n\r\npaymium = ccxt.paymium({\r\n  'apiKey': 'YOUR_PUBLIC_API_KEY',\r\n  'secret': 'YOUR_SECRET_PRIVATE_KEY',\r\n})\r\n\r\nprint(paymium.privateDeleteUserOrdersUuid({ \"uuid\": \"20f8dd15-ae87-4617-a353-d0996be60010\" }))\r\n"
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privateDeleteUserOrdersUuid({ "uuid": "20f8dd15-ae87-4617-a353-d0996be60010" }))
   '/user/orders/{uuid}/cancel':
     delete:
       summary: Cancel order
@@ -1021,9 +1252,30 @@ paths:
           description: User must be approved.
       x-code-samples:
         - lang: Javascript
-          source: "'use strict';\r\nconst ccxt = require ('ccxt');\r\n\r\n(async function () {\r\n  let paymium = new ccxt.paymium({\r\n    apiKey: 'YOUR_PUBLIC_API_KEY',\r\n    secret: 'YOUR_SECRET_PRIVATE_KEY',\r\n  })\r\n\r\n  console.log(paymium.id, await paymium.privatePostUserWithdrawals({ \"currency\": \"BTC\", \"amount\": \"1.0\", \"withdrawal_address\": \"1HdjGr6WCTcnmW1tNNsHX7fh4Jr5C2PeKe\" }))\r\n})();\r\n"
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_SECRET_PRIVATE_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privatePostUserWithdrawals({ "currency": "BTC", "amount": "1.0", "withdrawal_address": "1HdjGr6WCTcnmW1tNNsHX7fh4Jr5C2PeKe" }))
+            })();
         - lang: Python
-          source: "# coding=utf-8\r\n\r\nimport ccxt\r\n\r\npaymium = ccxt.paymium({\r\n  'apiKey': 'YOUR_PUBLIC_API_KEY',\r\n  'secret': 'YOUR_SECRET_PRIVATE_KEY',\r\n})\r\n\r\nprint(paymium.privatePostUserWithdrawals({ \"currency\": \"BTC\", \"amount\": \"1.0\", \"withdrawl_address\": \"1HdjLr5WCThbmW1tNNsFX7fh4Jr5C3PeKe\" }))\r\n"
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privatePostUserWithdrawals({ "currency": "BTC", "amount": "1.0", "withdrawl_address": "1HdjLr5WCThbmW1tNNsFX7fh4Jr5C3PeKe" }))
   /user/email_transfers:
     post:
       summary: Create email transfer
@@ -1064,9 +1316,30 @@ paths:
           description: User must be approved.
       x-code-samples:
         - lang: Javascript
-          source: "'use strict';\r\nconst ccxt = require ('ccxt');\r\n\r\n(async function () {\r\n  let paymium = new ccxt.paymium({\r\n    apiKey: 'YOUR_PUBLIC_API_KEY',\r\n    secret: 'YOUR_SECRET_PRIVATE_KEY',\r\n  })\r\n\r\n  console.log(paymium.id, await paymium.privatePostUserEmailTransfers({ \"currency\": \"BTC\", \"amount\": \"1.0\", \"email\": \"johnsmith@example.com\", \"comment\": \"For your savings\" }))\r\n})();\r\n"
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_SECRET_PRIVATE_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privatePostUserEmailTransfers({ "currency": "BTC", "amount": "1.0", "email": "johnsmith@example.com", "comment": "For your savings" }))
+            })();
         - lang: Python
-          source: "# coding=utf-8\r\n\r\nimport ccxt\r\n\r\npaymium = ccxt.paymium({\r\n  'apiKey': 'YOUR_PUBLIC_API_KEY',\r\n  'secret': 'YOUR_SECRET_PRIVATE_KEY',\r\n})\r\n\r\nprint(paymium.privatePostUserEmailTransfers({ \"currency\": \"BTC\", \"amount\": \"1.0\", \"email\": \"johnsmith@example.com\", \"comment\": \"For your savings\" }))\r\n"
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privatePostUserEmailTransfers({ "currency": "BTC", "amount": "1.0", "email": "johnsmith@example.com", "comment": "For your savings" }))
   /user/payment_requests:
     post:
       summary: Create payment request
@@ -1142,9 +1415,30 @@ paths:
                   example: '1688138855'
       x-code-samples:
         - lang: Javascript
-          source: "'use strict';\r\nconst ccxt = require ('ccxt');\r\n\r\n(async function () {\r\n  let paymium = new ccxt.paymium({\r\n    apiKey: 'YOUR_PUBLIC_API_KEY',\r\n    secret: 'YOUR_SECRET_PRIVATE_KEY',\r\n  })\r\n\r\n  console.log(paymium.id, await paymium.privatePostUserPaymentRequests({ \"currency\": \"BTC\", \"amount\": \"0.001\", \"email\": \"johnsmith@example.com\", \"comment\": \"For the restaurant\", \"payment_split\": \"0\" }))\r\n})();\r\n"
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_SECRET_PRIVATE_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privatePostUserPaymentRequests({ "currency": "BTC", "amount": "0.001", "email": "johnsmith@example.com", "comment": "For the restaurant", "payment_split": "0" }))
+            })();
         - lang: Python
-          source: "# coding=utf-8\r\n\r\nimport ccxt\r\n\r\npaymium = ccxt.paymium({\r\n  'apiKey': 'YOUR_PUBLIC_API_KEY',\r\n  'secret': 'YOUR_SECRET_PRIVATE_KEY',\r\n})\r\n\r\nprint(paymium.privatePostUserPaymentRequests({ \"currency\": \"BTC\", \"amount\": \"1.0\", \"email\": \"johnsmith@example.com\", \"comment\": \"For the restaurant\", \"payment_split\": \"0.5\" }))\r\n"
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privatePostUserPaymentRequests({ "currency": "BTC", "amount": "1.0", "email": "johnsmith@example.com", "comment": "For the restaurant", "payment_split": "0.5" }))
   /user/addresses:
     post:
       summary: Create deposit address
@@ -1181,9 +1475,30 @@ paths:
           description: Too many active addresses
       x-code-samples:
         - lang: Javascript
-          source: "'use strict';\r\nconst ccxt = require ('ccxt');\r\n\r\n(async function () {\r\n  let paymium = new ccxt.paymium({\r\n    apiKey: 'YOUR_PUBLIC_API_KEY',\r\n    secret: 'YOUR_SECRET_PRIVATE_KEY',\r\n  })\r\n\r\n  console.log(paymium.id, await paymium.privatePostUserAddresses({ currency: 'BTC' }))\r\n})();\r\n"
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_SECRET_PRIVATE_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privatePostUserAddresses({ currency: 'BTC' }))
+            })();
         - lang: Python
-          source: "# coding=utf-8\r\n\r\nimport ccxt\r\n\r\npaymium = ccxt.paymium({\r\n  'apiKey': 'YOUR_PUBLIC_API_KEY',\r\n  'secret': 'YOUR_SECRET_PRIVATE_KEY',\r\n})\r\n\r\nprint(paymium.privatePostUserAddresses('BTC'))\r\n"
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privatePostUserAddresses('BTC'))
     get:
       summary: List deposit addresses
       description: Retrieve your Bitcoin deposit addresses along with their expiration timestamp.
@@ -1206,9 +1521,30 @@ paths:
           description: User must be approved.
       x-code-samples:
         - lang: Javascript
-          source: "'use strict';\r\nconst ccxt = require ('ccxt');\r\n\r\n(async function () {\r\n  let paymium = new ccxt.paymium({\r\n    apiKey: 'YOUR_PUBLIC_API_KEY',\r\n    secret: 'YOUR_SECRET_PRIVATE_KEY',\r\n  })\r\n\r\n  console.log(paymium.id, await paymium.privateGetUserAddresses())\r\n})();\r\n"
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_SECRET_PRIVATE_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privateGetUserAddresses())
+            })();
         - lang: Python
-          source: "# coding=utf-8\r\n\r\nimport ccxt\r\n\r\npaymium = ccxt.paymium({\r\n  'apiKey': 'YOUR_PUBLIC_API_KEY',\r\n  'secret': 'YOUR_SECRET_PRIVATE_KEY',\r\n})\r\n\r\nprint(paymium.privateGetUserAddresses())\r\n"
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privateGetUserAddresses())
   '/user/addresses/{address}':
     get:
       summary: Get deposit address
@@ -1238,9 +1574,30 @@ paths:
           description: Address not found
       x-code-samples:
         - lang: Javascript
-          source: "'use strict';\r\nconst ccxt = require ('ccxt');\r\n\r\n(async function () {\r\n  let paymium = new ccxt.paymium({\r\n    apiKey: 'YOUR_PUBLIC_API_KEY',\r\n    secret: 'YOUR_SECRET_PRIVATE_KEY',\r\n  })\r\n\r\n  console.log(paymium.id, await paymium.privateGetUserAddressesAddress({\"address\": \"1HdjGr5WCHcnmW1tNNsHX7fh4Jr6C3PeKe\" }))\r\n})();\r\n"
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_SECRET_PRIVATE_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privateGetUserAddressesAddress({"address": "1HdjGr5WCHcnmW1tNNsHX7fh4Jr6C3PeKe" }))
+            })();
         - lang: Python
-          source: "# coding=utf-8\r\n\r\nimport ccxt\r\n\r\npaymium = ccxt.paymium({\r\n  'apiKey': 'YOUR_PUBLIC_API_KEY',\r\n  'secret': 'YOUR_SECRET_PRIVATE_KEY',\r\n})\r\n\r\nprint(paymium.privateGetUserAddressesAddress({\"address\": \"1HdjGr5WCHcnmW1tNNsHX7fh4Jr6C3PeKe\"})))\r\n"
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privateGetUserAddressesAddress({"address": "1HdjGr5WCHcnmW1tNNsHX7fh4Jr6C3PeKe"})))
   /user/price_alerts:
     get:
       summary: List price alerts
@@ -1283,9 +1640,30 @@ paths:
                 description: Date of creation (Number of seconds since Unix Epoch)
       x-code-samples:
         - lang: Javascript
-          source: "'use strict';\r\nconst ccxt = require ('ccxt');\r\n\r\n(async function () {\r\n  let paymium = new ccxt.paymium({\r\n    apiKey: 'YOUR_PUBLIC_API_KEY',\r\n    secret: 'YOUR_SECRET_PRIVATE_KEY',\r\n  })\r\n\r\n  console.log(paymium.id, await paymium.privateGetUserPriceAlerts())\r\n})();\r\n"
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_SECRET_PRIVATE_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privateGetUserPriceAlerts())
+            })();
         - lang: Python
-          source: "# coding=utf-8\r\n\r\nimport ccxt\r\n\r\npaymium = ccxt.paymium({\r\n  'apiKey': 'YOUR_PUBLIC_API_KEY',\r\n  'secret': 'YOUR_SECRET_PRIVATE_KEY',\r\n})\r\n\r\nprint(paymium.privateGetUserPriceAlerts())\r\n"
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privateGetUserPriceAlerts())
     post:
       summary: Create price alert
       tags:
@@ -1311,9 +1689,30 @@ paths:
           description: ''
       x-code-samples:
         - lang: Javascript
-          source: "'use strict';\r\nconst ccxt = require ('ccxt');\r\n\r\n(async function () {\r\n  let paymium = new ccxt.paymium({\r\n    apiKey: 'YOUR_PUBLIC_API_KEY',\r\n    secret: 'YOUR_SECRET_PRIVATE_KEY',\r\n  })\r\n\r\n  console.log(paymium.id, await paymium.privatePostUserPriceAlerts({ \"token\": \"0ff2f39d-cd9f-4710-9eb5-3f8385f5e059\", \"notify_above\": \"60000\", \"notify_below\": \"40000\" }))\r\n})();\r\n"
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_SECRET_PRIVATE_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privatePostUserPriceAlerts({ "token": "0ff2f39d-cd9f-4710-9eb5-3f8385f5e059", "notify_above": "60000", "notify_below": "40000" }))
+            })();
         - lang: Python
-          source: "# coding=utf-8\r\n\r\nimport ccxt\r\n\r\npaymium = ccxt.paymium({\r\n  'apiKey': 'YOUR_PUBLIC_API_KEY',\r\n  'secret': 'YOUR_SECRET_PRIVATE_KEY',\r\n})\r\n\r\nprint(paymium.privatePostUserPriceAlerts({ \"token\": \"0ff2f39d-cd9f-4710-9eb5-3f8385f5e059\", \"notify_above\": \"60000\", \"notify_below\": \"40000\" }))\r\n"
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privatePostUserPriceAlerts({ "token": "0ff2f39d-cd9f-4710-9eb5-3f8385f5e059", "notify_above": "60000", "notify_below": "40000" }))
   '/user/price_alerts/{id}':
     delete:
       summary: Delete price alert
@@ -1336,9 +1735,30 @@ paths:
           description: ''
       x-code-samples:
         - lang: Javascript
-          source: "'use strict';\r\nconst ccxt = require ('ccxt');\r\n\r\n(async function () {\r\n  let paymium = new ccxt.paymium({\r\n    apiKey: 'YOUR_PUBLIC_API_KEY',\r\n    secret: 'YOUR_SECRET_PRIVATE_KEY',\r\n  })\r\n\r\n  console.log(paymium.id, await paymium.privateDeleteUserPriceAlertsId({ \"id\": 11021 }))\r\n})();\r\n"
+          source: |
+            'use strict';
+            const ccxt = require ('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_SECRET_PRIVATE_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privateDeleteUserPriceAlertsId({ "id": 11021 }))
+            })();
         - lang: Python
-          source: "# coding=utf-8\r\n\r\nimport ccxt\r\n\r\npaymium = ccxt.paymium({\r\n  'apiKey': 'YOUR_PUBLIC_API_KEY',\r\n  'secret': 'YOUR_SECRET_PRIVATE_KEY',\r\n})\r\n\r\nprint(paymium.privateDeleteUserPriceAlertsId({ \"id\": 11021 }))\r\n"
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privateDeleteUserPriceAlertsId({ "id": 11021 }))
   /merchant/create_payment:
     post:
       summary: Create merchant payment
@@ -1398,9 +1818,44 @@ paths:
             $ref: '#/definitions/Payment'
       x-code-samples:
         - lang: Javascript
-          source: "'use strict';\r\nconst ccxt = require('ccxt');\r\n\r\n(async function () {\r\n  let paymium = new ccxt.paymium({\r\n    apiKey: 'YOUR_PUBLIC_API_KEY',\r\n    secret: 'YOUR_PRIVATE_API_KEY',\r\n  })\r\n\r\n  console.log(paymium.id, await paymium.privatePostMerchantCreatePayment({\r\n    \"amount\": \"0.0001\",\r\n    \"payment_split\": \"0\",\r\n    \"currency\": \"BTC\",\r\n    \"callback_url\": \"https://myonlineshop/payments/order-987978/callback\",\r\n    \"redirect_url\": \"http://myonlineshop/payments/order-987978/success\",\r\n    \"merchant_reference\": \"order-987978\"\r\n  }))\r\n})();\r\n"
+          source: |
+            'use strict';
+            const ccxt = require('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_PRIVATE_API_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privatePostMerchantCreatePayment({
+                "amount": "0.0001",
+                "payment_split": "0",
+                "currency": "BTC",
+                "callback_url": "https://myonlineshop/payments/order-987978/callback",
+                "redirect_url": "http://myonlineshop/payments/order-987978/success",
+                "merchant_reference": "order-987978"
+              }))
+            })();
         - lang: Python
-          source: "# coding=utf-8\r\n\r\nimport ccxt\r\n\r\npaymium = ccxt.paymium({\r\n  'apiKey': 'YOUR_PUBLIC_API_KEY',\r\n  'secret': 'YOUR_SECRET_PRIVATE_KEY',\r\n})\r\n\r\nprint(paymium.privatePostMerchantCreatePayment({\r\n  \"amount\": \"0.0001\",\r\n  \"payment_split\": \"0\",\r\n  \"currency\": \"BTC\",\r\n  \"callback_url\": \"https://myonlineshop/payments/order-987978/callback\",\r\n  \"redirect_url\": \"http://myonlineshop/payments/order-987978/success\",\r\n  \"merchant_reference\": \"order-987978\"\r\n}))"
+          source: |-
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privatePostMerchantCreatePayment({
+              "amount": "0.0001",
+              "payment_split": "0",
+              "currency": "BTC",
+              "callback_url": "https://myonlineshop/payments/order-987978/callback",
+              "redirect_url": "http://myonlineshop/payments/order-987978/success",
+              "merchant_reference": "order-987978"
+            }))
   '/merchant/get_payment/{uuid}':
     get:
       summary: Get merchant payment
@@ -1426,9 +1881,30 @@ paths:
             $ref: '#/definitions/Payment'
       x-code-samples:
         - lang: Javascript
-          source: "'use strict';\r\nconst ccxt = require('ccxt');\r\n\r\n(async function () {\r\n  let paymium = new ccxt.paymium({\r\n    apiKey: 'YOUR_PUBLIC_API_KEY',\r\n    secret: 'YOUR_PRIVATE_API_KEY',\r\n  })\r\n\r\n  console.log(paymium.id, await paymium.privateGetMerchantGetPaymentUuid({ \"uuid\": \"0a31a001-2deb-48f1-b413-f1a31a9f97c1\" }))\r\n})();\r\n"
+          source: |
+            'use strict';
+            const ccxt = require('ccxt');
+
+            (async function () {
+              let paymium = new ccxt.paymium({
+                apiKey: 'YOUR_PUBLIC_API_KEY',
+                secret: 'YOUR_PRIVATE_API_KEY',
+              })
+
+              console.log(paymium.id, await paymium.privateGetMerchantGetPaymentUuid({ "uuid": "0a31a001-2deb-48f1-b413-f1a31a9f97c1" }))
+            })();
         - lang: Python
-          source: "# coding=utf-8\r\n\r\nimport ccxt\r\n\r\npaymium = ccxt.paymium({\r\n  'apiKey': 'YOUR_PUBLIC_API_KEY',\r\n  'secret': 'YOUR_SECRET_PRIVATE_KEY',\r\n})\r\n\r\nprint(paymium.privateGetMerchantGetPaymentUuid({ \"uuid\": \"0a31a001-2deb-48f1-b413-f1a31a9f97c1\" }))\r\n"
+          source: |
+            # coding=utf-8
+
+            import ccxt
+
+            paymium = ccxt.paymium({
+              'apiKey': 'YOUR_PUBLIC_API_KEY',
+              'secret': 'YOUR_SECRET_PRIVATE_KEY',
+            })
+
+            print(paymium.privateGetMerchantGetPaymentUuid({ "uuid": "0a31a001-2deb-48f1-b413-f1a31a9f97c1" }))
 securityDefinitions:
   ApiKey:
     type: apiKey
